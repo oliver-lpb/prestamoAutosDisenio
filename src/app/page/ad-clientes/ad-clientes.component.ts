@@ -19,6 +19,13 @@ export class AdClientesComponent implements OnInit {
   //validacion de correo
   submitted = false;
 
+  form: FormGroup;
+  loading = false;
+  titulo = "Agregar Cliente";
+  panelOpenState = false;
+  step = 0;
+
+
   @Output() seleccionado: EventEmitter<boolean>;
 
   constructor(
@@ -57,12 +64,13 @@ export class AdClientesComponent implements OnInit {
     this.seleccionado = new EventEmitter();
   }
 
-  form: FormGroup;
-  loading = false;
-  titulo = "Agregar Cliente";
+  
 
   ngOnInit(): void {
     this.leerEditar();
+    this.panelOpenState = false;
+    this.step = 0;
+    
   }
 
   agregarEditar() {
@@ -182,4 +190,20 @@ export class AdClientesComponent implements OnInit {
     this.seleccionado.emit(false);
     this.router.navigate(["/clientesVersionDos"]);
   }
+
+  
+  
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+  
 }

@@ -9,9 +9,10 @@
                 <mat-label>Foto</mat-label>
                 <input matInput type="text" placeholder="Nombre" name="nombre" formControlName="fotoUrl">
 
-                <div *ngIf = "getValidacion('fotoUrl')?.invalid && (getValidacion('fotoUrl')?.touched || getValidacion('fotoUrl')?.dirty)  " class ="rojo">
-                    <div *ngIf = "getValidacion('fotoUrl')?.errors?.['required']" class ="rojo">
-                    *El "fotoUrl" es requerido.
+                <div *ngIf="getValidacion('fotoUrl')?.invalid && (getValidacion('fotoUrl')?.touched || getValidacion('fotoUrl')?.dirty)  "
+                    class="rojo">
+                    <div *ngIf="getValidacion('fotoUrl')?.errors?.['required']" class="rojo">
+                        *El "fotoUrl" es requerido.
                     </div>
                 </div>
 
@@ -20,10 +21,11 @@
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Nombre</mat-label>
                 <input matInput type="text" placeholder="Nombre" name="nombre" formControlName="nombre">
-                
-                <div *ngIf = "getValidacion('nombre')?.invalid && (getValidacion('nombre')?.touched || getValidacion('nombre')?.dirty)  " class ="rojo">
-                    <div *ngIf = "getValidacion('nombre')?.errors?.['required']" class ="rojo">
-                    *El "Nombre" es requerido.
+
+                <div *ngIf="getValidacion('nombre')?.invalid && (getValidacion('nombre')?.touched || getValidacion('nombre')?.dirty)  "
+                    class="rojo">
+                    <div *ngIf="getValidacion('nombre')?.errors?.['required']" class="rojo">
+                        *El "Nombre" es requerido.
                     </div>
                 </div>
 
@@ -32,10 +34,11 @@
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Apellido</mat-label>
                 <input matInput type="text" placeholder="Apellido" name="apellido" formControlName="apellido">
-            
-                <div *ngIf = "getValidacion('apellido')?.invalid && (getValidacion('apellido')?.touched || getValidacion('apellido')?.dirty)  " class ="rojo">
-                    <div *ngIf = "getValidacion('apellido')?.errors?.['required']" class ="rojo">
-                    *El "apellido" es requerido.
+
+                <div *ngIf="getValidacion('apellido')?.invalid && (getValidacion('apellido')?.touched || getValidacion('apellido')?.dirty)  "
+                    class="rojo">
+                    <div *ngIf="getValidacion('apellido')?.errors?.['required']" class="rojo">
+                        *El "apellido" es requerido.
                     </div>
                 </div>
 
@@ -44,45 +47,48 @@
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>DPI</mat-label>
                 <input matInput type="text" placeholder="DPI" name="dpi" formControlName="dpi">
-            
-                <div *ngIf = "getValidacion('dpi')?.invalid && (getValidacion('dpi')?.touched || getValidacion('dpi')?.dirty)  " class ="rojo">
-                    <div *ngIf = "getValidacion('dpi')?.errors?.['required']" class ="rojo">
-                    *El "DPI" es requerido.
+
+                <div *ngIf="getValidacion('dpi')?.invalid && (getValidacion('dpi')?.touched || getValidacion('dpi')?.dirty)  "
+                    class="rojo">
+                    <div *ngIf="getValidacion('dpi')?.errors?.['required']" class="rojo">
+                        *El "DPI" es requerido.
                     </div>
-                    <div *ngIf = "getValidacion('dpi')?.errors?.['minlength']" class ="rojo">
-                    *DPI invalido (numero de digitos minimo 13).
+                    <div *ngIf="getValidacion('dpi')?.errors?.['minlength']" class="rojo">
+                        *DPI invalido (numero de digitos minimo 13).
                     </div>
                 </div>
 
             </mat-form-field>
 
-            
+
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>NIT</mat-label>
                 <input matInput type="text" placeholder="NIT" name="nit" formControlName="NumNit">
-            
-                <div *ngIf = "getValidacion('NumNit')?.invalid && (getValidacion('NumNit')?.touched || getValidacion('NumNit')?.dirty)  " class ="rojo">
-                    <div *ngIf = "getValidacion('NumNit')?.errors?.['required']" class ="rojo">
-                    *El "Nit" es requerido.
+
+                <div *ngIf="getValidacion('NumNit')?.invalid && (getValidacion('NumNit')?.touched || getValidacion('NumNit')?.dirty)  "
+                    class="rojo">
+                    <div *ngIf="getValidacion('NumNit')?.errors?.['required']" class="rojo">
+                        *El "Nit" es requerido.
                     </div>
-                    <div *ngIf = "getValidacion('dpi')?.errors?.['minlength']" class ="rojo">
-                    *Nit invalido (numero de digitos minimo 9).
+                    <div *ngIf="getValidacion('dpi')?.errors?.['minlength']" class="rojo">
+                        *Nit invalido (numero de digitos minimo 9).
                     </div>
                 </div>
 
             </mat-form-field>
 
-         
+
 
 
 
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput type="email" placeholder="Enter your email" name="correo" formControlName="correo">
-            
-                <div *ngIf = "getValidacion('correo')?.invalid && (getValidacion('correo')?.touched || getValidacion('correo')?.dirty)  " class ="rojo">
-                    <div *ngIf = "getValidacion('correo')?.errors?.['required']" class ="rojo">
-                    *El "@correo" es requerido.
+
+                <div *ngIf="getValidacion('correo')?.invalid && (getValidacion('correo')?.touched || getValidacion('correo')?.dirty)  "
+                    class="rojo">
+                    <div *ngIf="getValidacion('correo')?.errors?.['required']" class="rojo">
+                        *El "@correo" es requerido.
                     </div>
                 </div>
 
@@ -91,15 +97,17 @@
 
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Direccion</mat-label>
-                <textarea matInput rows="6" placeholder="Totonicapan..." name="direccion" formControlName="direccion"></textarea>
-                
-                <div *ngIf = "getValidacion('direccion')?.invalid && (getValidacion('direccion')?.touched || getValidacion('direccion')?.dirty)  " class ="rojo">
-                    <div *ngIf = "getValidacion('direccion')?.errors?.['required']" class ="rojo">
-                    *El "Direccion" es requerida.
+                <textarea matInput rows="6" placeholder="Totonicapan..." name="direccion"
+                    formControlName="direccion"></textarea>
+
+                <div *ngIf="getValidacion('direccion')?.invalid && (getValidacion('direccion')?.touched || getValidacion('direccion')?.dirty)  "
+                    class="rojo">
+                    <div *ngIf="getValidacion('direccion')?.errors?.['required']" class="rojo">
+                        *El "Direccion" es requerida.
                     </div>
                 </div>
-            
-               
+
+
 
 
             </mat-form-field>
@@ -107,10 +115,11 @@
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Telefono</mat-label>
                 <input matInput type="text" value="" placeholder="Telefono" name="telefono" formControlName="telefono">
-        
-                <div *ngIf = "getValidacion('telefono')?.invalid && (getValidacion('telefono')?.touched || getValidacion('telefono')?.dirty)  " class ="rojo">
-                    <div *ngIf = "getValidacion('telefono')?.errors?.['required']" class ="rojo">
-                    *El "telefono" es requerido.
+
+                <div *ngIf="getValidacion('telefono')?.invalid && (getValidacion('telefono')?.touched || getValidacion('telefono')?.dirty)  "
+                    class="rojo">
+                    <div *ngIf="getValidacion('telefono')?.errors?.['required']" class="rojo">
+                        *El "telefono" es requerido.
                     </div>
                 </div>
 
@@ -119,7 +128,8 @@
 
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Telefono Secundario</mat-label>
-                <input matInput type="text" placeholder="Telefono Secundario" name="telefonoSecundario" formControlName="telefonoSecundario">
+                <input matInput type="text" placeholder="Telefono Secundario" name="telefonoSecundario"
+                    formControlName="telefonoSecundario">
             </mat-form-field>
 
             <section class="example-section">
@@ -136,11 +146,12 @@
             </section>
 
             <section class="example-section">
-                <label class="example-margin">vehiculo:</label>
+                <!-- Editado Oliver-->
+                <label class="example-margin">Casa:</label>
                 <mat-radio-group name="vheiculo" formControlName="vehiculo">
                     <!--aqui se captura la informacion-->
                     <mat-radio-button class="example-margin" color="primary" value="Prestado">
-                        Prestado
+                        Alquiler
                     </mat-radio-button>
                     <mat-radio-button class="example-margin" color="accent" value="Propio">
                         Propio
@@ -153,55 +164,93 @@
                 <mat-radio-group name="Estado_civil" formControlName="Estado_civil">
                     <!--aqui se captura la informacion-->
                     <mat-radio-button class="example-margin" color="primary" value="Casad@">
-                        Casad@
+                        Casado(a)
                     </mat-radio-button>
                     <mat-radio-button class="example-margin" color="accent" value="Soltero">
-                        Solter@
+                        Soltero(a)
                     </mat-radio-button>
                 </mat-radio-group>
             </section>
-<br>
+            <br>
 
             <!--Espacio donde esta la referencia a ingresar-->
             <H4>REFERENCIA </H4>
-            <P>Primera persona</P>
-            <mat-form-field class="w-100 fs-16" appearance="outline">
-                <mat-label>Nombre</mat-label>
-                <input matInput type="text" placeholder="Nombre y apellidos">
-              </mat-form-field>
 
-              <mat-form-field class="w-100 fs-16" appearance="outline">
-                <mat-label>Telefono</mat-label>
-                <input matInput type="text" placeholder="Introduzca el telefono">
-              </mat-form-field>
+            <!-- Editado Oliver-->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> Primera persona </mat-panel-title>
 
-              <mat-form-field class="w-100 fs-16" appearance="outline">
-                <mat-label>Parentesco</mat-label>
-                <input matInput type="text" placeholder="Parentesco">
-              </mat-form-field>
-
-              <P>Segunda persona</P>
-              <mat-form-field class="w-100 fs-16" appearance="outline">
-                  <mat-label>Nombre</mat-label>
-                  <input matInput type="text" placeholder="Nombre y apellidos">
-                </mat-form-field>
-  
+                </mat-expansion-panel-header>
                 <mat-form-field class="w-100 fs-16" appearance="outline">
-                  <mat-label>Telefono</mat-label>
-                  <input matInput type="text" placeholder="Introduzca el telefono">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" placeholder="Nombre y apellidos">
                 </mat-form-field>
-  
+
                 <mat-form-field class="w-100 fs-16" appearance="outline">
-                  <mat-label>Parentesco</mat-label>
-                  <input matInput type="text" placeholder="Parentesco">
+                    <mat-label>Telefono</mat-label>
+                    <input matInput type="text" placeholder="Introduzca el telefono">
                 </mat-form-field>
 
-            <button (click)="agregarEditar()" mat-raised-button class="me-8 mb-8" color="primary" type="submit">Guardar</button>
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                    <mat-label>Parentesco</mat-label>
+                    <input matInput type="text" placeholder="Parentesco">
+                </mat-form-field>
+            </mat-expansion-panel>
+            <br>
+            <!-- Editado Oliver-->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> Segunda persona </mat-panel-title>
 
-            <button mat-raised-button class="me-8 mb-8" color="warn" type="submit" (click)="cancelar()">Cancelar</button>
+                </mat-expansion-panel-header>
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" placeholder="Nombre y apellidos">
+                </mat-form-field>
+
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                    <mat-label>Telefono</mat-label>
+                    <input matInput type="text" placeholder="Introduzca el telefono">
+                </mat-form-field>
+
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                    <mat-label>Parentesco</mat-label>
+                    <input matInput type="text" placeholder="Parentesco">
+                </mat-form-field>
+            </mat-expansion-panel>
+            <br>
+            <!-- Editado Oliver-->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> Tercera persona </mat-panel-title>
+
+                </mat-expansion-panel-header>
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" placeholder="Nombre y apellidos">
+                </mat-form-field>
+
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                    <mat-label>Telefono</mat-label>
+                    <input matInput type="text" placeholder="Introduzca el telefono">
+                </mat-form-field>
+
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                    <mat-label>Parentesco</mat-label>
+                    <input matInput type="text" placeholder="Parentesco">
+                </mat-form-field>
+            </mat-expansion-panel>
+
+            <br><br>
+
+            <button (click)="agregarEditar()" mat-raised-button class="me-8 mb-8" color="primary"
+                type="submit">Guardar</button>
+
+            <button mat-raised-button class="me-8 mb-8" color="warn" type="submit"
+                (click)="cancelar()">Cancelar</button>
         </form>
 
 
     </div>
 </div>
-
