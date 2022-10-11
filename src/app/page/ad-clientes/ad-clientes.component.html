@@ -1,4 +1,5 @@
 <!-- Form Layout -->
+
 <div class="card fondo">
     <div class="card-body">
         <h4 class="mb-32">Datos del Cliente</h4>
@@ -71,18 +72,7 @@
 
             </mat-form-field>
 
-            <section class="example-section">
-                <label class="example-margin">Sexo:</label>
-                <mat-radio-group name="sexo" formControlName="sexo">
-                    <!--aqui se captura la informacion-->
-                    <mat-radio-button class="example-margin" color="primary" value="Masculino">
-                        Masculino
-                    </mat-radio-button>
-                    <mat-radio-button class="example-margin" color="accent" value="Femenino">
-                        Femenino
-                    </mat-radio-button>
-                </mat-radio-group>
-            </section>
+         
 
 
 
@@ -92,7 +82,7 @@
             
                 <div *ngIf = "getValidacion('correo')?.invalid && (getValidacion('correo')?.touched || getValidacion('correo')?.dirty)  " class ="rojo">
                     <div *ngIf = "getValidacion('correo')?.errors?.['required']" class ="rojo">
-                    *El "correo" es requerido.
+                    *El "@correo" es requerido.
                     </div>
                 </div>
 
@@ -109,6 +99,9 @@
                     </div>
                 </div>
             
+               
+
+
             </mat-form-field>
 
             <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -129,7 +122,79 @@
                 <input matInput type="text" placeholder="Telefono Secundario" name="telefonoSecundario" formControlName="telefonoSecundario">
             </mat-form-field>
 
+            <section class="example-section">
+                <label class="example-margin">Sexo:</label>
+                <mat-radio-group name="sexo" formControlName="sexo">
+                    <!--aqui se captura la informacion-->
+                    <mat-radio-button class="example-margin" color="primary" value="Masculino">
+                        Masculino
+                    </mat-radio-button>
+                    <mat-radio-button class="example-margin" color="accent" value="Femenino">
+                        Femenino
+                    </mat-radio-button>
+                </mat-radio-group>
+            </section>
 
+            <section class="example-section">
+                <label class="example-margin">vehiculo:</label>
+                <mat-radio-group name="vheiculo" formControlName="vehiculo">
+                    <!--aqui se captura la informacion-->
+                    <mat-radio-button class="example-margin" color="primary" value="Prestado">
+                        Prestado
+                    </mat-radio-button>
+                    <mat-radio-button class="example-margin" color="accent" value="Propio">
+                        Propio
+                    </mat-radio-button>
+                </mat-radio-group>
+            </section>
+
+            <section class="example-section">
+                <label class="example-margin">Estado civil:</label>
+                <mat-radio-group name="Estado_civil" formControlName="Estado_civil">
+                    <!--aqui se captura la informacion-->
+                    <mat-radio-button class="example-margin" color="primary" value="Casad@">
+                        Casad@
+                    </mat-radio-button>
+                    <mat-radio-button class="example-margin" color="accent" value="Soltero">
+                        Solter@
+                    </mat-radio-button>
+                </mat-radio-group>
+            </section>
+<br>
+
+            <!--Espacio donde esta la referencia a ingresar-->
+            <H4>REFERENCIA </H4>
+            <P>Primera persona</P>
+            <mat-form-field class="w-100 fs-16" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" placeholder="Nombre y apellidos">
+              </mat-form-field>
+
+              <mat-form-field class="w-100 fs-16" appearance="outline">
+                <mat-label>Telefono</mat-label>
+                <input matInput type="text" placeholder="Introduzca el telefono">
+              </mat-form-field>
+
+              <mat-form-field class="w-100 fs-16" appearance="outline">
+                <mat-label>Parentesco</mat-label>
+                <input matInput type="text" placeholder="Parentesco">
+              </mat-form-field>
+
+              <P>Segunda persona</P>
+              <mat-form-field class="w-100 fs-16" appearance="outline">
+                  <mat-label>Nombre</mat-label>
+                  <input matInput type="text" placeholder="Nombre y apellidos">
+                </mat-form-field>
+  
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                  <mat-label>Telefono</mat-label>
+                  <input matInput type="text" placeholder="Introduzca el telefono">
+                </mat-form-field>
+  
+                <mat-form-field class="w-100 fs-16" appearance="outline">
+                  <mat-label>Parentesco</mat-label>
+                  <input matInput type="text" placeholder="Parentesco">
+                </mat-form-field>
 
             <button (click)="agregarEditar()" mat-raised-button class="me-8 mb-8" color="primary" type="submit">Guardar</button>
 
@@ -139,3 +204,4 @@
 
     </div>
 </div>
+
