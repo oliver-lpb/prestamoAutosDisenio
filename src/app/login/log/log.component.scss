@@ -11,16 +11,24 @@
     max-inline-size: 20rem;
 }
 
-/* helpers/hidden.css */
+/* espacio del login */
 .content {
     position: fixed;
     left: 0;
     right: 0;
     z-index: 2;
-    background-color: black;
-    
+    background-color: rgb(70, 70, 70);
+    height: 420px;
+    width: 350px;
+   margin: auto;
+   border-radius: 12%;
+    padding: 2rem;  
+    margin: auto;  
+    display: block;
 }
-
+#boton{
+    background: rgb(199, 48, 48) ;
+}
 .hidden {
     border: 0;
     clip: rect(0 0 0 0);
@@ -183,5 +191,7 @@ p {
 }
 
 .imagen img {
-    border-radius: 10px;
+    overflow: hidden;
+    height: 120px;
+    border-radius: 15px;
 }
