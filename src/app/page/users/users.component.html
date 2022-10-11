@@ -1,0 +1,77 @@
+<!-- Form Design Type -->
+<div class="card">
+    <form class="card-body" [formGroup]="registerUser">
+        <h4 class="mb-32">Nuevo Usuario</h4>
+
+        <mat-form-field class="me-24 fs-16" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input  type="text" matInput formControlName="nombre">
+            
+        </mat-form-field>
+
+        <mat-form-field class="me-24 fs-16" appearance="fill">
+            <mat-label>Correo</mat-label>
+            <input  type="text" matInput formControlName="correo">
+        </mat-form-field>
+
+        <mat-form-field class="me-24 fs-16" appearance="legacy">
+            <mat-label>Contraseña</mat-label>
+            <input  type="text" matInput formControlName="password">
+        </mat-form-field>
+
+        
+        <section class="example-section">
+            <label class="example-margin rol"> <strong>Rol:</strong></label>
+            <mat-radio-group name="sexo" formControlName="rol">
+                <!--aqui se captura la informacion-->
+                <mat-radio-button class="example-margin" color="primary" value="gerencia">
+                    Gerencia
+                </mat-radio-button>
+                <mat-radio-button class="example-margin" color="accent" value="secretaria">
+                    Secretaría
+                </mat-radio-button>
+                <mat-radio-button class="example-margin" color="accent" value="ventas">
+                    Ventas
+                </mat-radio-button>
+            </mat-radio-group>
+        </section>
+        
+        <button mat-button color="primary" (click)="registrar()">Guardar</button>
+    </form>
+</div>
+
+<!-- Daily Activity -->
+<mat-card class="w-100">
+    <mat-card-content>
+        <h4 class="mb-56">Lista de Usarios</h4>
+
+        <div class="table-responsive">
+            <table mat-table [dataSource]="usersAdmins" class="text-nowrap w-100">
+
+                <!-- Assigned Column -->
+                <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let element">
+                        <p class="mb-0 fw-medium">{{ element.nombre }}</p>
+                        
+                    </td>
+                </ng-container>
+                <!-- Id Column -->
+                <ng-container matColumnDef="Correo">
+                    <th mat-header-cell *matHeaderCellDef> Correo </th>
+                    <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.correo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Rol">
+                    <th mat-header-cell *matHeaderCellDef> Rol </th>
+                    <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.rol}} </td>
+                </ng-container>
+
+                
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
