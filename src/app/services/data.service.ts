@@ -9,6 +9,11 @@ import { Observable, Subject } from 'rxjs';
 import { Auth, } from '@angular/fire/auth';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { userAdminModel } from '../models/adminUser.model';
+//import { Storage, ref, uploadBytes, listAll, getDownloadURL } from '@angular/fire/storage';
+//proceso sube imangen y capturas de urls
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs/operators';
+
 
 @Injectable({
     providedIn: 'root'
@@ -17,13 +22,11 @@ export class DatosService {
 
     private userModel$ = new Subject<any>();
 
-    constructor(private firebase: AngularFirestore) { }
+    constructor(private firebase: AngularFirestore, public storage: AngularFireStorage) { }
 
     saveUser(userForm: userModel): Promise<any> {
         return this.firebase.collection('usuarios').add(userForm);
     }
-
-
     getUser(): Observable<any> {
         return this.firebase.collection('usuarios', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
     }
@@ -36,13 +39,10 @@ export class DatosService {
     getUserAdmin(): Observable<any> {
         return this.firebase.collection('usuariosAdmin', ref => ref.orderBy('correo', 'asc')).snapshotChanges();
     }
-
-
     //en edicion
     eliminarTarjeta(id: string): Promise<any> {
         return this.firebase.collection('usuarios').doc(id).delete();
     }
-
     editaTarjeta(id: string, tarjeta: any): Promise<any> {
         return this.firebase.collection('usuarios').doc(id).update(tarjeta);
     }
@@ -59,6 +59,25 @@ export class DatosService {
         return this.firebase.collection('usuarios').doc(id).update(data);
     }
 
+    uptoadlmage(file:any, path: string, nombre:string): Promise<string>{
 
+        return new Promise(resolve=>{
+            
+            const filePath =path + '/' + nombre;
+            const ref = this.storage.ref(filePath);
+            const task = ref.put(file);
+            task.snapshotChanges().pipe(
+                finalize(() =>{
+                    ref.getDownloadURL().subscribe(res=>{
+                        const dowloadURL = res;
+                        resolve(dowloadURL);
+                        return;
+                    });
+                })
+            )
+            .subscribe();
+            
+        })
+    }
 
 }

@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import {AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
+
 // Modules
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
@@ -25,6 +26,15 @@ import { CommonModule } from '@angular/common';
 import { UsersComponent } from './page/users/users.component';
 import { RetrivePasswordComponent } from './page/retrive-password/retrive-password.component';
 import { QuotationComponent } from './page/quotation/quotation.component';
+//import { from } from 'rxjs';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+
+import { provideAuth,getAuth } from '@angular/fire/auth';
+
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideStorage,getStorage } from '@angular/fire/storage';
+
+
 
 @NgModule({
   declarations: [
@@ -50,9 +60,14 @@ import { QuotationComponent } from './page/quotation/quotation.component';
     CommonModule,
      //para conectar a firebase
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     AngularFirestoreModule,
-    
+    //provideStorage(()=>getStorage()),
     ReactiveFormsModule,
+    provideAuth(() => getAuth()),
+
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
     
   ],
   providers: [],

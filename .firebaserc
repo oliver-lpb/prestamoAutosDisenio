@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "prestamoautos-ed136"
+  },
+  "targets": {
+    "prestamoautos-ed136": {
+      "hosting": {
+        "flexy-angular": [
+          "prestamoautos-ed136"
+        ]
+      }
+    }
+  }
+}

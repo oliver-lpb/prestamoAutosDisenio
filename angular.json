@@ -110,6 +110,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "flexy-angular:build:production",
+            "firebaseProject": "prestamoautos-ed136",
+            "firebaseHostingSite": "prestamoautos-ed136"
+          }
         }
       }
     }

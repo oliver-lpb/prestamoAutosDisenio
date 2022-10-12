@@ -5,6 +5,11 @@
         <h4 class="mb-32">Datos del Cliente</h4>
         <form [formGroup]="form">
 
+            <div class="imagenes">
+                <input type="file" (change)="newImageUpload($event)">
+            </div>
+
+
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Foto</mat-label>
                 <input matInput type="text" placeholder="Nombre" name="nombre" formControlName="fotoUrl">
@@ -60,7 +65,6 @@
 
             </mat-form-field>
 
-
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>NIT</mat-label>
                 <input matInput type="text" placeholder="NIT" name="nit" formControlName="NumNit">
@@ -77,10 +81,6 @@
 
             </mat-form-field>
 
-
-
-
-
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput type="email" placeholder="Enter your email" name="correo" formControlName="correo">
@@ -91,9 +91,7 @@
                         *El "@correo" es requerido.
                     </div>
                 </div>
-
             </mat-form-field>
-
 
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Direccion</mat-label>
@@ -106,10 +104,6 @@
                         *El "Direccion" es requerida.
                     </div>
                 </div>
-
-
-
-
             </mat-form-field>
 
             <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -148,7 +142,7 @@
             <section class="example-section">
                 <!-- Editado Oliver-->
                 <label class="example-margin">Casa:</label>
-                <mat-radio-group name="vheiculo" formControlName="vehiculo">
+                <mat-radio-group name="casa" formControlName="casa">
                     <!--aqui se captura la informacion-->
                     <mat-radio-button class="example-margin" color="primary" value="Prestado">
                         Alquiler
@@ -161,12 +155,12 @@
 
             <section class="example-section">
                 <label class="example-margin">Estado civil:</label>
-                <mat-radio-group name="Estado_civil" formControlName="Estado_civil">
+                <mat-radio-group name="estadoCivil" formControlName="estadoCivil">
                     <!--aqui se captura la informacion-->
-                    <mat-radio-button class="example-margin" color="primary" value="Casad@">
+                    <mat-radio-button class="example-margin" color="primary" value="Casado(a)">
                         Casado(a)
                     </mat-radio-button>
-                    <mat-radio-button class="example-margin" color="accent" value="Soltero">
+                    <mat-radio-button class="example-margin" color="accent" value="Soltero(a)">
                         Soltero(a)
                     </mat-radio-button>
                 </mat-radio-group>
@@ -184,61 +178,61 @@
                 </mat-expansion-panel-header>
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Nombre</mat-label>
-                    <input matInput type="text" placeholder="Nombre y apellidos">
+                    <input matInput type="text" placeholder="Nombre y apellidos" formControlName="refNombrePrimer">
                 </mat-form-field>
 
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Telefono</mat-label>
-                    <input matInput type="text" placeholder="Introduzca el telefono">
+                    <input matInput type="text" placeholder="Introduzca el telefono" formControlName="refTelefonoPrimer">
                 </mat-form-field>
 
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Parentesco</mat-label>
-                    <input matInput type="text" placeholder="Parentesco">
+                    <input matInput type="text" placeholder="Parentesco" formControlName="refParentescoPrimer">
                 </mat-form-field>
             </mat-expansion-panel>
             <br>
             <!-- Editado Oliver-->
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
-                    <mat-panel-title> Segunda persona </mat-panel-title>
+                    <mat-panel-title> Primera persona </mat-panel-title>
 
                 </mat-expansion-panel-header>
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Nombre</mat-label>
-                    <input matInput type="text" placeholder="Nombre y apellidos">
+                    <input matInput type="text" placeholder="Nombre y apellidos" formControlName="refNombreSegundo">
                 </mat-form-field>
 
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Telefono</mat-label>
-                    <input matInput type="text" placeholder="Introduzca el telefono">
+                    <input matInput type="text" placeholder="Introduzca el telefono" formControlName="refTelefonoSegundo">
                 </mat-form-field>
 
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Parentesco</mat-label>
-                    <input matInput type="text" placeholder="Parentesco">
+                    <input matInput type="text" placeholder="Parentesco" formControlName="refParentescoSegundo">
                 </mat-form-field>
             </mat-expansion-panel>
             <br>
             <!-- Editado Oliver-->
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
-                    <mat-panel-title> Tercera persona </mat-panel-title>
+                    <mat-panel-title> Primera persona </mat-panel-title>
 
                 </mat-expansion-panel-header>
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Nombre</mat-label>
-                    <input matInput type="text" placeholder="Nombre y apellidos">
+                    <input matInput type="text" placeholder="Nombre y apellidos" formControlName="refNombreTercer">
                 </mat-form-field>
 
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Telefono</mat-label>
-                    <input matInput type="text" placeholder="Introduzca el telefono">
+                    <input matInput type="text" placeholder="Introduzca el telefono" formControlName="refTelefonoTercer">
                 </mat-form-field>
 
                 <mat-form-field class="w-100 fs-16" appearance="outline">
                     <mat-label>Parentesco</mat-label>
-                    <input matInput type="text" placeholder="Parentesco">
+                    <input matInput type="text" placeholder="Parentesco" formControlName="refParentescoTercer">
                 </mat-form-field>
             </mat-expansion-panel>
 
