@@ -25,6 +25,7 @@ export class AdClientesComponent implements OnInit {
   panelOpenState = false;
   step = 0;
   images: string[];
+  verificadorFoto=true;
 
   @Output() seleccionado: EventEmitter<boolean>;
 
@@ -83,17 +84,17 @@ export class AdClientesComponent implements OnInit {
     this.leerEditar();
     this.panelOpenState = false;
     this.step = 0;
-    //this.gerImages();
+    
   }
 
   async newImageUpload(event:any){
     const path = 'images';
-    const name = 'pruyebas1';
+    const name =  event.target.files[0].name;
     const file = event.target.files[0];
     const res = await this.dataServices.uptoadlmage(file, path, name);
     this.foto = res;
-    console.log('se recibio la promesa', res);
-    console.log('fin dela funcion');
+    this.verificadorFoto=false;
+    
   }
 
   agregarEditar() {
@@ -109,12 +110,10 @@ export class AdClientesComponent implements OnInit {
 
   registerUser() {
     
-    console.log('paso en if registrar');
-    
     this.submitted = true;
     //condicion para validar formulario
-    if (this.form.invalid) {
-      console.log('paso en if validacion');
+    if (this.form.invalid && this.verificadorFoto) {
+      console.log('paso en if validacion denegada');
       return;
     }
     const User: any = {
@@ -168,38 +167,6 @@ export class AdClientesComponent implements OnInit {
     
   }
 
-  /** 
-
-  uploadImage($event: any) {
-    const file = $event.target.files[0];
-    console.log(file);
-
-    const imgRef = ref(this.storage, `images/${file.name}`);
-
-    uploadBytes(imgRef, file)
-      .then(response => {
-        console.log(response)
-        this.getImages();
-      })
-      .catch(error => console.log(error));
-
-  }
-
-  getImages() {
-    const imagesRef = ref(this.storage, 'images');
-
-    listAll(imagesRef)
-      .then(async response => {
-        console.log(response);
-        this.images = [];
-        for (let item of response.items) {
-          const url = await getDownloadURL(item);
-          this.images.push(url);
-        }
-      })
-      .catch(error => console.log(error));
-  }
-*/
 
   actualizarUsuario(id: string) {
     this.submitted = true;
@@ -233,7 +200,7 @@ export class AdClientesComponent implements OnInit {
       refTelefonoTercer:this.form.value.refTelefonoTercer,
       refParentescoTercer:this.form.value.refParentescoTercer,
 
-      fotoUrl: this.form.value.fotoUrl,
+      fotoUrl: this.foto,
       sexo: this.form.value.sexo,
       fehcaActualizacion: new Date(),
     };
@@ -278,10 +245,11 @@ export class AdClientesComponent implements OnInit {
           refNombreTercer:data.payload.data()["refNombreTercer"],
           refTelefonoTercer:data.payload.data()["refTelefonoTercer"],
           refParentescoTercer:data.payload.data()["refParentescoTercer"],
-        });
-      });
-    }
+        })}
+        );
+      }
   }
+
 
   getValidacion(validacion: string) {
     return this.form.get(validacion);

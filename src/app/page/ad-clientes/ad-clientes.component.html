@@ -5,24 +5,26 @@
         <h4 class="mb-32">Datos del Cliente</h4>
         <form [formGroup]="form">
 
-            <div class="imagenes">
-                <input type="file" (change)="newImageUpload($event)">
-            </div>
-
-
-            <mat-form-field class="w-100 fs-16" appearance="outline">
-                <mat-label>Foto</mat-label>
-                <input matInput type="text" placeholder="Nombre" name="nombre" formControlName="fotoUrl">
-
-                <div *ngIf="getValidacion('fotoUrl')?.invalid && (getValidacion('fotoUrl')?.touched || getValidacion('fotoUrl')?.dirty)  "
-                    class="rojo">
-                    <div *ngIf="getValidacion('fotoUrl')?.errors?.['required']" class="rojo">
-                        *El "fotoUrl" es requerido.
-                    </div>
+            
+        
+                <img [src]='form.value.fotoUrl' width="200">
+                <div class="nueva"  *ngIf="!verificadorFoto">
+                    <p>Nueva Foto</p>
+                    <img [src]='foto' width="200">
                 </div>
-
-            </mat-form-field>
-
+                
+                <div class="imagenes">
+                    <input type="file" (change)="newImageUpload($event)">
+                </div>
+        <!--
+            <div *ngIf="getValidacion('fotoUrl')?.invalid && (getValidacion('fotoUrl')?.touched || getValidacion('fotoUrl')?.dirty)  "
+            class="rojo">
+            <div *ngIf="getValidacion('fotoUrl')?.errors?.['required']" class="rojo">
+                *La "foto" es requerida.
+            </div>
+        </div>
+        
+    -->
             <mat-form-field class="w-100 fs-16" appearance="outline">
                 <mat-label>Nombre</mat-label>
                 <input matInput type="text" placeholder="Nombre" name="nombre" formControlName="nombre">
