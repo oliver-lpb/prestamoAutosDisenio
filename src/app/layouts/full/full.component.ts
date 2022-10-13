@@ -57,7 +57,12 @@ export class FullComponent {
       icon: "file-text",
       menu: "Clientes",
     },
-
+    
+    {
+      link: "/vehiculos",
+      icon: "file-text",
+      menu: "Vehiculos",
+    },
     {
       link: "/cotizacion",
       icon: "divide-circle",
@@ -69,6 +74,7 @@ export class FullComponent {
       icon: "disc",
       menu: "Usuarios",
     },
+    
 
     /**
      * 

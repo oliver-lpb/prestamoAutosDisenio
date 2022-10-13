@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Router } from '@angular/router';
-
 //importacion del modelo
 import { userModel } from 'src/app/models/user.model';
+import { AutenticacionService } from 'src/app/services/auth.service';
 //importacion de servicio
 import { DatosService } from 'src/app/services/data.service';
 
@@ -18,9 +17,10 @@ export class ClientesComponent implements OnInit {
   idCliente:any;
   users:userModel[]=[];
   initAddUser:boolean=false;
+  deletUser:boolean=false;
   displayedColumns: string[] = ['Nombre', 'DPI', 'NIT', 'Telefono', 'Botones'];
 
-  constructor(private dataServices:DatosService, private router:Router) { }
+  constructor(private dataServices:DatosService, private router:Router, private auth:AutenticacionService) { }
 
   ngOnInit(): void {
     this.obtenerTarjeta();
@@ -38,17 +38,14 @@ export class ClientesComponent implements OnInit {
     })
   }
 
-  editCliente(id:string){
-    localStorage.setItem('id',id);
-    alert('llegamos aqui pero no se porque no pasa a la otra pantalla');
-    this.router.navigate(['home'])
-  }
-
-
+  correo: string ='';
   eliminarTarjeta(id:any){
-
-    this.dataServices.eliminarTarjeta(id).then(()=>{
-    },error=>{console.log(error)})
+    this.auth.obternerUserLogin().subscribe(res=>{
+      console.log(res?.email);
+      
+    })
+    //this.dataServices.eliminarTarjeta(id).then(()=>{
+    //},error=>{console.log(error)})
   }
 
   initUser(){
@@ -59,4 +56,5 @@ export class ClientesComponent implements OnInit {
       this.initAddUser=false;
     }
   }
+
 }

@@ -167,7 +167,6 @@ export class AdClientesComponent implements OnInit {
     
   }
 
-
   actualizarUsuario(id: string) {
     this.submitted = true;
     //condicion para validar formulario
@@ -260,16 +259,5 @@ export class AdClientesComponent implements OnInit {
     this.router.navigate(["/clientesVersionDos"]);
   }
 
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
   
 }

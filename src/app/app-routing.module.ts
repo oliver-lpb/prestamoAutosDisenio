@@ -21,7 +21,7 @@ import { FullComponent } from './layouts/full/full.component';
 
 //impotaciones propias
 import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
-
+import { map } from 'rxjs/operators';
 
 import { LogComponent } from './login/log/log.component';
 import { AdClientesComponent } from './page/ad-clientes/ad-clientes.component';
@@ -29,6 +29,17 @@ import { ClientesComponent } from './page/clientes/clientes.component';
 import { UsersComponent } from './page/users/users.component';
 import { RetrivePasswordComponent } from './page/retrive-password/retrive-password.component';
 import { QuotationComponent } from './page/quotation/quotation.component';
+import { RoleGuardGuard } from './lock/role-guard.guard';
+import { ValidationRolComponent } from './page/validation-rol/validation-rol.component';
+import { VehicleComponent } from './page/vehicle/vehicle.component';
+import { AddVehicleComponent } from './page/add-vehicle/add-vehicle.component';
+
+const uIdAdmin = 'rCNEiGvcAjh4jg90m79T2Jr24Av2';
+const onlyAdmnin = () => map((user:any) => {
+  !!user && user.uid === user.uIdAdmin
+  console.log('este es el id',user.uid)
+});
+
 
 const routes: Routes = [
   {
@@ -59,28 +70,77 @@ const routes: Routes = [
       
 
     {path:"clientesVersionDos", component:ClientesComponent, 
-    canActivate: [AngularFireAuthGuard]
+    canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+    data:{
+      expectedRoles:['gerencia', 'secretaria', 'ventas']
+    }
     },
 
     {
       path: 'addCliente',component:AdClientesComponent,
-      canActivate: [AngularFireAuthGuard]
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria']
+      }
     },
 
     {
       path: 'editCliente/:id',component:AdClientesComponent,
-      canActivate: [AngularFireAuthGuard]
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria']
+      }
     },
 
     {
       path: 'users',component:UsersComponent,
-      canActivate: [AngularFireAuthGuard]
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia']
+      }
+      
+    },
+
+    {
+      path: 'vehiculos',component:VehicleComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria', 'ventas']
+      }
+    },
+    {
+      path: 'addVehiculos',component:AddVehicleComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria', 'ventas']
+      }
+    },
+    {
+      path: 'addVehiculos/:id',component:AddVehicleComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria', 'ventas']
+      }
     },
 
     {
       path: 'cotizacion',component:QuotationComponent,
-      canActivate: [AngularFireAuthGuard]
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria', 'ventas']
+      }
     },
+
+    {
+      path: 'valid',component:ValidationRolComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria']
+      }
+    },
+    //vehiculos
+
+    
     
     {path:"recuperar", component:RetrivePasswordComponent, 
       

@@ -33,6 +33,12 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { ValidationRolComponent } from './page/validation-rol/validation-rol.component';
+import { VehicleComponent } from './page/vehicle/vehicle.component';
+import { AddVehicleComponent } from './page/add-vehicle/add-vehicle.component';
+
+
+
 
 
 
@@ -45,7 +51,11 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     LogComponent,
     UsersComponent,
     RetrivePasswordComponent,
-    QuotationComponent
+    QuotationComponent,
+    ValidationRolComponent,
+    VehicleComponent,
+    AddVehicleComponent,
+    
   ],
   imports: [
     BrowserModule,

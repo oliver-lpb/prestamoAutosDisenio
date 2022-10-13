@@ -23,22 +23,46 @@ export class DatosService {
     private userModel$ = new Subject<any>();
 
     constructor(private firebase: AngularFirestore, public storage: AngularFireStorage) { }
-
+//guardado de usario
     saveUser(userForm: userModel): Promise<any> {
         return this.firebase.collection('usuarios').add(userForm);
     }
+//obtencio de usario
     getUser(): Observable<any> {
-        return this.firebase.collection('usuarios', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
+        return this.firebase.collection('usuarios', ref => ref.orderBy('fechaCreacion', 'desc')).snapshotChanges();
     }
+    getUsuario(id: string): Observable<any> {
+        return this.firebase.collection('usuarios').doc(id).snapshotChanges();
+    }
+    actualizaUsuario(id: string, data: any): Promise<any> {
+        return this.firebase.collection('usuarios').doc(id).update(data);
+    }
+
+
+//guardado de vehiculo
+    saveVehicle(userForm: userModel): Promise<any> {
+        return this.firebase.collection('vehiculo').add(userForm);
+    }
+//obtencio de vehiculo
+    getVehiculo(): Observable<any> {
+        return this.firebase.collection('vehiculo', ref => ref.orderBy('fechaCreacion', 'desc')).snapshotChanges();
+    }
+    getVehiculoEdit(id: string): Observable<any> {
+        return this.firebase.collection('vehiculo').doc(id).snapshotChanges();
+    }
+    actualizarVehiculo(id: string, data: any): Promise<any> {
+        return this.firebase.collection('vehiculo').doc(id).update(data);
+    }
+
 
     // usarios admin
     saveUserAdmin(userForm: userAdminModel): Promise<any> {
         return this.firebase.collection('usuariosAdmin').add(userForm);
     }
-
     getUserAdmin(): Observable<any> {
         return this.firebase.collection('usuariosAdmin', ref => ref.orderBy('correo', 'asc')).snapshotChanges();
     }
+
     //en edicion
     eliminarTarjeta(id: string): Promise<any> {
         return this.firebase.collection('usuarios').doc(id).delete();
@@ -47,37 +71,45 @@ export class DatosService {
         return this.firebase.collection('usuarios').doc(id).update(tarjeta);
     }
 
-    addTarjetaEdit(tarjeta: userModel) {
-        this.userModel$.next(tarjeta);
+
+   
+
+    correoAdmins(correo: string) {
+        return this.firebase.collection('usuariosAdmin', ref => ref.where('correo', '==', correo)).valueChanges;
     }
 
-    getUsuario(id: string): Observable<any> {
-        return this.firebase.collection('usuarios').doc(id).snapshotChanges();
-    }
+    
 
-    actualizaUsuario(id: string, data: any): Promise<any> {
-        return this.firebase.collection('usuarios').doc(id).update(data);
-    }
+    uptoadlmage(file: any, path: string, nombre: string): Promise<string> {
 
-    uptoadlmage(file:any, path: string, nombre:string): Promise<string>{
+        return new Promise(resolve => {
 
-        return new Promise(resolve=>{
-            
-            const filePath =path + '/' + nombre;
+            const filePath = path + '/' + nombre;
             const ref = this.storage.ref(filePath);
             const task = ref.put(file);
             task.snapshotChanges().pipe(
-                finalize(() =>{
-                    ref.getDownloadURL().subscribe(res=>{
+                finalize(() => {
+                    ref.getDownloadURL().subscribe(res => {
                         const dowloadURL = res;
                         resolve(dowloadURL);
                         return;
                     });
                 })
             )
-            .subscribe();
-            
+                .subscribe();
+
         })
+    }
+
+    //quotation servicios
+    createDoc(data: any, path: string, id: string) {
+        const collection = this.firebase.collection(path);
+        return collection.doc(id).set(data);
+    }
+
+    updateDoc(data: any, path: string, id: string) {
+        const collection = this.firebase.collection(path);
+        return collection.doc(id).set(data);
     }
 
 }

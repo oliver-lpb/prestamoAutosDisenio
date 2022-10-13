@@ -1,0 +1,135 @@
+<main>
+<div class="formulario">
+
+    <div class="container pt-4">
+        <div class="row">
+            <div class="col-lg-6">
+                <h3> Calculo de cuotas</h3>
+                <form class="mt-4">
+                    <div class="row">
+                        <div class="col">
+                            <label>Monto</label>
+                            <input type="number" placeholder="Monto" [(ngModel)]='cotizacion.monto' name="monto"
+                                class="form-control">
+                        </div>
+                        <div class="col">
+                            <label>Cuota Deseada</label>
+                            <input type="number" placeholder="Cuota desada" [(ngModel)]='cotizacion.cuotaDeseada'
+                                name="cuotaDeseada" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label class="form-control-lg mt-3">Tipo de interes</label>
+                    </div>
+                    <div class="col">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label" for="">Interes Fijo</label>
+                            <input name="interes" (click)="tipoInteres(1)" type="radio">
+                        </div>
+                        <label class="form-check-label" for="">Interes Porcentaje</label>
+                        <input name="interes" (click)="tipoInteres(2)" type="radio">
+                    </div>
+
+                    <div *ngIf="cotizacion.interesTipo==1" class="fijo">
+                        <input type="number" class="form-check form-check-inline" type="text" placeholder="Interes Fijo"
+                            [(ngModel)]='cotizacion.interesFijo' name="interesFijo" class="form-control">
+                    </div>
+
+                    <div *ngIf="cotizacion.interesTipo==2" class="porcentaje">
+                        <select class="form-check form-check-inline" [(ngModel)]='cotizacion.interesPorcentaje'
+                            name="interesPorcentaje" class="form-control">
+                            <option value="0.03">3%</option>
+                            <option value="0.05">5%</option>
+                            <option value="0.10">10%</option>
+                            <option value="0.15">15%</option>
+                            <option value="0.20">20%</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-control-lg mt-3">Fecha de pago</label>
+                            <input type="date" placeholder="Fecha de pago" [(ngModel)]='cotizacion.fechaPago'
+                                name="fechaPago" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label class="form-control-lg mt-3">Periodo de pago</label>
+                            <select name="periodoPagos" [(ngModel)]='cotizacion.periodoPago' name="periodoPago"
+                                class="form-control">
+                                <option value="mensual">Mensual</option>
+                                <option value="quincenal">Quincenal</option>
+                                <option value="semanal">Semanal</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-control-lg mt-3">Cliente</label>
+                            <input type="text" placeholder="Cliente" [(ngModel)]='cotizacion.cliente' name="cliente"
+                                class="form-control">
+                        </div>
+                        <div class="col">
+                            <label class="form-control-lg mt-3">Foto veiculo</label>
+                            <input type="text" placeholder="Foto" [(ngModel)]='cotizacion.foto' name="foto"
+                                class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <input class="btn btn-info" type="submit" name="" id="" value="calcular"
+                            (click)="comprobacionDatos()">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    <!---   
+<label *ngFor="let pagos of cot.pagos">
+lista {{pagos.fecha| json}}
+</label>
+-->
+</div>
+
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <span class="h3"> Formulario Cotizacion </span>
+            <table class="table table-striped mt-5">
+                <thead>
+                    <tr>
+                        <th>Nombre </th>
+                        <td>{{cot.nombre}}</td>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th>Fecha de pago</th>
+                        <th>Cuota Fija</th>
+                        <th>Interes</th>
+                        <th>Capital</th>
+                        <th>Saldo</th>
+                        <th>Firma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pagos of cot.pagos">
+                        <td>{{pagos.fechaPago| json}}</td>
+                        <td>{{pagos.cuotaCotizacion| json}}</td>
+                        <td>{{pagos.interesCotizacion| json}}</td>
+                        <td>{{pagos.capitalCotizacion| json}}</td>
+                        <td>{{pagos.saldoCotizacion| json}}</td>
+                        <td>{{pagos.firmaPago| json}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</main>
