@@ -13,6 +13,7 @@ import { userAdminModel } from '../models/adminUser.model';
 //proceso sube imangen y capturas de urls
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
+import { ref } from 'firebase/storage';
 
 
 @Injectable({
@@ -102,14 +103,24 @@ export class DatosService {
     }
 
     //quotation servicios
-    createDoc(data: any, path: string, id: string) {
+    createDoc(data: any, path: string) {
         const collection = this.firebase.collection(path);
-        return collection.doc(id).set(data);
+        return collection.doc().set(data);
     }
 
     updateDoc(data: any, path: string, id: string) {
         const collection = this.firebase.collection(path);
         return collection.doc(id).set(data);
+    }
+
+    //busqueda cliente
+    getClient(dpi:string){
+        return this.firebase.collection('usuarios',ref=> ref.where('dpi','==', dpi)).snapshotChanges();
+    }
+
+    //Busqueda vehiculo
+    getVehicul(modeloVehiculo:string){
+        return this.firebase.collection('vehiculo',ref=> ref.where('modelo','==', modeloVehiculo)).snapshotChanges();
     }
 
 }

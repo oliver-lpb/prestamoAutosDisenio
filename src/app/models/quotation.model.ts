@@ -6,16 +6,21 @@ export interface Quotation {
     interesPorcentaje: number;
     fechaPago: string;
     periodoPago: string;
-    cliente: string;
+    dpiBusqueda: string;
+    idCliente: string;
+    vehiculoBusqueda: string;
+    idVehiculo: string;
     foto: string;
     capital: number;
     resultado: number;
     saldo: number;
-    porcentajeVariable: number;
+    porcentajeVariable: number;  
 }
 
 export interface Cotizacion {
-    nombre: string;
+    id?: string;
+    idCliente: string;
+    idVehiculo: string;
     pagos: listaPago[];
 }
 
