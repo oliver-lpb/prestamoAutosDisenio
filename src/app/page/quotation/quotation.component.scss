@@ -1,0 +1,38 @@
+input[type=radio] {
+    border: 0px;
+    width: 27%;
+    height: 2em;
+}
+p {font-size: medium;}
+
+.fondo{
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+
+}
+table{
+    background-color: white;
+    text-align: left;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td{
+    padding: 20px;
+}
+
+thead{
+    background-color: #ffffff;
+    border-bottom: solid 5px #4b5296;
+    color: rgb(3, 3, 3);
+}
+
+tr:nth-child(even){
+    background-color: #ddd;
+}
+
+tr:hover td{
+    background-color: #363c96;
+    color: white;
+}

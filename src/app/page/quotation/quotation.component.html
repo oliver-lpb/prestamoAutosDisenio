@@ -1,19 +1,27 @@
 <main>
-   
-<form class="mt-4">
+   <div class="fondo">
+    <form class="mt-4 " >
         <h3> Buscar cliente</h3>
     <div class="row">
         <div class="col">
-            <label class="form-control-lg mt-3">Cliente</label>
-            <input type="text" placeholder="Cliente (DPI)" [(ngModel)]='cotizacion.dpiBusqueda' name="cliente"
-                class="form-control">
+           
+            <mat-form-field class="w-100 fs-16" appearance="outline">
+                <mat-label>DPI</mat-label>
+                <input matInput type="text" placeholder="Introducir DPI" [(ngModel)]='cotizacion.dpiBusqueda'
+                name="cliente" class="form-control">
+               
+            </mat-form-field>
+
+           
         </div>
         <div class="col">
-        <input class="btn btn-info" type="submit" name="" id="" value="Buscar cliente"
-            (click)="buscarCliente()">
+            <button (click)="buscarCliente()" mat-raised-button class="me-8 mb-8" color="primary" 
+            type="submit">Buscar Cliente</button>
+        
+           
         </div>
     </div>
-</form>
+ </form>
 
     
  <mat-card class="w-45">
@@ -63,62 +71,78 @@
     </mat-card-content>
 </mat-card>
 
-<form class="mt-4">
-    <h3> Buscar Vehiculo</h3>
-<div class="row">
-    <div class="col">
-        <label class="form-control-lg mt-3">Modelo</label>
-        <input type="text" placeholder="Vehiculo (modelo)" [(ngModel)]='cotizacion.vehiculoBusqueda' name="vehiculo"
-            class="form-control">
-    </div>
-    <div class="col">
-    <input class="btn btn-info" type="submit" name="" id="" value="Buscar vehiculo"
-        (click)="buscarVehiculo()">
-    </div>
-</div>
-</form>
+   </div>
 
-<mat-card class="w-45">
-    <mat-card-content>
-        <h4 class="mb-25">Vehiculo</h4>
-        <div class="table-responsive">
-            <table mat-table [dataSource]="vehicle" class="text-nowrap w-100">
-                <!-- Assigned Column -->
-                <ng-container matColumnDef="Vehiculo">
-                    <th mat-header-cell *matHeaderCellDef> Vehiculo </th>
+<br>
+
+   <div class="fondo">
+
+
+    <form class="mt-4 ">
+        <h3> Buscar Vehiculo</h3>
+    <div class="row">
+        <div class="col">
+            <mat-form-field class="w-100 fs-16" appearance="outline">
+                <mat-label>Modelo del vehiculo</mat-label>
+                <input matInput type="text" placeholder="Modelo del vehiculo"
+                [(ngModel)]='cotizacion.vehiculoBusqueda'
+                name="vehiculo" class="form-control">   
+            </mat-form-field>
+            
+        </div>
+        <div class="col">
+            <button (click)="buscarVehiculo()" mat-raised-button class="me-8 mb-8" color="primary" 
+            type="submit">Buscar vehiculo</button>
+    
+      
+        </div>
+    </div>
+    </form>
+    
+    <mat-card class="w-45 fondo">
+        <mat-card-content>
+            <h4 class="mb-25">Vehiculo</h4>
+            <div class="table-responsive">
+                <table mat-table [dataSource]="vehicle" class="text-nowrap w-100">
+                    <!-- Assigned Column -->
+                    <ng-container matColumnDef="Vehiculo">
+                        <th mat-header-cell *matHeaderCellDef> Vehiculo </th>
+                        <td mat-cell *matCellDef="let element">
+                            <p class="mb-0 fw-medium">{{ element.marca }}</p>
+                            <p class="mb-0 fw-normal op-5">{{ element.modelo }}</p>
+                        </td>
+                    </ng-container>
+                    <!-- Id Column -->
+                    <ng-container matColumnDef="Tipo">
+                        <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                        <td mat-cell class="fw-medium" *matCellDef="let element"  > {{element.tipo}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="Color">
+                        <th mat-header-cell *matHeaderCellDef> Color </th>
+                        <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.color}} </td>
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                  <!-- Budget Column -->
+                  <ng-container matColumnDef="Botones">
+                    <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element">
-                        <p class="mb-0 fw-medium">{{ element.marca }}</p>
-                        <p class="mb-0 fw-normal op-5">{{ element.modelo }}</p>
+                        <button mat-raised-button class="me-8 mb-8" color="primaryid"  
+                        (click)="seleccionarVehiculo(element.id)">Seleccionar</button>
                     </td>
                 </ng-container>
-                <!-- Id Column -->
-                <ng-container matColumnDef="Tipo">
-                    <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                    <td mat-cell class="fw-medium" *matCellDef="let element"  > {{element.tipo}} </td>
-                </ng-container>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    
 
-                <ng-container matColumnDef="Color">
-                    <th mat-header-cell *matHeaderCellDef> Color </th>
-                    <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.color}} </td>
-                </ng-container>
+   </div>
+<br>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-              <!-- Budget Column -->
-              <ng-container matColumnDef="Botones">
-                <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let element">
-                    <button mat-raised-button class="me-8 mb-8" color="primaryid"  
-                    (click)="seleccionarVehiculo(element.id)">Seleccionar</button>
-                </td>
-            </ng-container>
-            </table>
-        </div>
-    </mat-card-content>
-</mat-card>
-
-
-<div class="formulario">
+<div class="formulario fondo" >
 
     <div class="container pt-4">
         <div class="row">
@@ -127,51 +151,72 @@
                 <form class="mt-4">
                     <div class="row">
                         <div class="col">
-                            <label>Monto</label>
-                            <input type="number" placeholder="Monto" [(ngModel)]='cotizacion.monto' name="monto"
-                                class="form-control">
+
+                            <mat-form-field class="w-100 fs-16" appearance="outline">
+                                <mat-label>Monto</mat-label>
+                                <input matInput type="number" placeholder="Monto" [(ngModel)]='cotizacion.monto' name="monto" class="form-control">
+                
+                               
+                            </mat-form-field>
+
+
                         </div>
                         <div class="col">
-                            <label>Cuota Deseada</label>
-                            <input type="number" placeholder="Cuota desada" [(ngModel)]='cotizacion.cuotaDeseada'
+                            <mat-form-field class="w-100 fs-16" appearance="outline">
+                                <mat-label>Cuota Deseada</mat-label>
+                                <input matInput type="number" placeholder="Cuota desada" [(ngModel)]='cotizacion.cuotaDeseada'
                                 name="cuotaDeseada" class="form-control">
+                               
+                            </mat-form-field>
+
                         </div>
                     </div>
                     <div class="col">
-                        <label class="form-control-lg mt-3">Tipo de interes</label>
+                        <mat-label><h3>Tipo de interes</h3></mat-label>
                     </div>
                     <div class="col">
                         <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="">Interes Fijo</label>
+                            <label class="form-check-label" for=""><p>Interes Fijo<p></label>
+                            
                             <input name="interes" (click)="tipoInteres(1)" type="radio">
                         </div>
-                        <label class="form-check-label" for="">Interes Porcentaje</label>
+                        <br>
+                        <label class="form-check-label" for=""><p>Interes Porcentaje<p></label>
+                        <br>
                         <input name="interes" (click)="tipoInteres(2)" type="radio">
                     </div>
 
                     <div *ngIf="cotizacion.interesTipo==1" class="fijo">
-                        <input type="number" class="form-check form-check-inline" type="text" placeholder="Interes Fijo"
+                        <mat-form-field class="w-100 fs-16" appearance="outline">
+                            <input matInput type="number" class="form-check form-check-inline" type="text" placeholder="Interes fijo"  
                             [(ngModel)]='cotizacion.interesFijo' name="interesFijo" class="form-control">
-                    </div>
+                        </mat-form-field>
 
+                    </div>
+                    <br>
                     <div *ngIf="cotizacion.interesTipo==2" class="porcentaje">
                         <select class="form-check form-check-inline" [(ngModel)]='cotizacion.interesPorcentaje'
                             name="interesPorcentaje" class="form-control">
-                            <option value="0.03">3%</option>
+                            <option value="0.03 " >3%</option>
                             <option value="0.05">5%</option>
                             <option value="0.10">10%</option>
                             <option value="0.15">15%</option>
                             <option value="0.20">20%</option>
+                           
                         </select>
+                       
                     </div>
+
+                    <br>
                     <div class="row">
                         <div class="col">
-                            <label class="form-control-lg mt-3">Fecha de pago</label>
+                            <label class="form-control-lg mt-3"> <p>Fecha de pago</p> </label> <br>
                             <input type="date" placeholder="Fecha de pago" [(ngModel)]='cotizacion.fechaPago'
                                 name="fechaPago" class="form-control">
                         </div>
+                        <br>
                         <div class="col">
-                            <label class="form-control-lg mt-3">Periodo de pago</label>
+                            <label class="form-control-lg mt-3"> <p>Periodo de pago</p> </label> <br>
                             <select name="periodoPagos" [(ngModel)]='cotizacion.periodoPago' name="periodoPago"
                                 class="form-control">
                                 <option value="mensual">Mensual</option>
@@ -180,18 +225,21 @@
                             </select>
                         </div>
                     </div>
-
+                    <br>
                     <div class="row">
                         <div class="col">
-                            <label class="form-control-lg mt-3">Foto veiculo</label>
-                            <input type="text" placeholder="Foto" [(ngModel)]='cotizacion.foto' name="foto"
+                            <mat-form-field class="w-100 fs-16" appearance="outline">
+                                <mat-label>Foto de vehiculo </mat-label>
+                                <input matInput type="text" placeholder="Foto" [(ngModel)]='cotizacion.foto' name="foto"
                                 class="form-control">
+                               
+                            </mat-form-field>
+
                         </div>
                     </div>
 
                     <div class="mt-3">
-                        <input class="btn btn-info" type="submit" name="" id="" value="calcular"
-                            (click)="comprobacionDatos()">
+                        <button (click)="comprobacionDatos()" mat-raised-button class="me-8 mb-8" color="primary" type="submit">calcular</button>
                     </div>
 
                 </form>
@@ -200,6 +248,7 @@
     </div>
 
 </div>
+ <br>
 
 <div>
 
@@ -211,7 +260,7 @@ lista {{pagos.fecha| json}}
 </div>
 
 
-<div class="container mt-4">
+<div class="container mt-4 fondo">
     <div class="card">
         <div class="card-body">
             <span class="h3"> Formulario Cotizacion </span>
