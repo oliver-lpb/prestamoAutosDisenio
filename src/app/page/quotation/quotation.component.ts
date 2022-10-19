@@ -2,13 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, NgModel, Validators } from '@angular/forms';
 import { elementAt, Observable } from 'rxjs';
-import { Cotizacion, Quotation } from 'src/app/models/quotation.model';
+import { Cotizacion, Quotation, datosPDF } from 'src/app/models/quotation.model';
 import { userModel } from 'src/app/models/user.model';
 import { DatosService } from 'src/app/services/data.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import Swal from 'sweetalert2';
 import { vehicleModel } from 'src/app/models/vehicle.model';
+//alerta
+import Swal from 'sweetalert2';
 
+//para imprimir pdf
+import jspdf from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-quotation',
@@ -29,7 +33,6 @@ export class QuotationComponent implements OnInit {
     idCliente: '',
     vehiculoBusqueda:'',
     idVehiculo:'',
-    foto: '',
     capital: 0,
     resultado: 0,
     saldo: 0,
@@ -41,6 +44,18 @@ export class QuotationComponent implements OnInit {
     idVehiculo:'',
     pagos: [],
   }
+
+  datosPDF: datosPDF={
+    clientNombre:'',
+    clientApellido:'',
+    clientDpi:'',
+    clientDireccion:'',
+    clientTelefono:'',
+    autoNombre:'',
+    autoModelo:'',
+    autoMarca:'',
+    autoColor:'',
+  } 
 
   users:userModel[]=[];
   displayedColumns: string[] = ['Nombre', 'DPI', 'NIT', 'Telefono','Direccion','Botones'];
@@ -107,6 +122,12 @@ export class QuotationComponent implements OnInit {
       if (this.cotizacion.idCliente=="" ||this.cotizacion.idVehiculo=="" || this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.interesFijo == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesFijo) {
         return;
       }
+      Swal.fire({
+        icon: 'success',
+        title: 'Cotizacion generada con exito!',
+        showConfirmButton: false,
+        timer: 1500
+      })
       this.calcularInteresFijo();
     } else if (this.cotizacion.interesTipo == 2) {
       if (this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesPorcentaje || this.cotizacion.interesPorcentaje >= this.cotizacion.cuotaDeseada) {
@@ -126,6 +147,15 @@ export class QuotationComponent implements OnInit {
     //saldo inicial
     this.cotizacion.saldo = this.cotizacion.monto;
 
+    this.cot.pagos.push({
+      "fechaPago": "Saldo inicial",
+      "cuotaCotizacion": 0,
+      "interesCotizacion": 0,
+      "capitalCotizacion": 0,
+      "saldoCotizacion": this.cotizacion.monto,
+      "firmaPago": ""
+    });
+
 
     //para que inicie el dia que se eligio
     if (this.cotizacion.periodoPago == "mensual") {
@@ -141,7 +171,6 @@ export class QuotationComponent implements OnInit {
 
       this.cot.idCliente = this.cotizacion.idCliente;
       this.cot.idVehiculo = this.cotizacion.idVehiculo;
-      this.cot.idCliente = this.cotizacion.idCliente;
       this.cot.pagos.push({
         "fechaPago": this.cotizacion.fechaPago,
         "cuotaCotizacion": this.cotizacion.cuotaDeseada,
@@ -166,8 +195,6 @@ export class QuotationComponent implements OnInit {
 
       contador = this.cotizacion.saldo;
     }
-    const path = 'cotizacion/';
-    this.dataServices.createDoc(this.cot, path);
   }
 
 
@@ -180,6 +207,16 @@ export class QuotationComponent implements OnInit {
 
     //saldo inicial
     this.cotizacion.saldo = this.cotizacion.monto;
+
+    this.cot.pagos.push({
+      "fechaPago": "Saldo inicial",
+      "cuotaCotizacion": 0,
+      "interesCotizacion": 0,
+      "capitalCotizacion": 0,
+      "saldoCotizacion": this.cotizacion.monto,
+      "firmaPago": ""
+    });
+
 
     //para que inicie el dia que se eligio
     if (this.cotizacion.periodoPago == "mensual") {
@@ -222,9 +259,6 @@ export class QuotationComponent implements OnInit {
       //cotador para finalisar el ciclo
       contador = this.cotizacion.saldo;
     }
-    //guardar cotizacion
-    const path = 'cotizacion/';
-    this.dataServices.createDoc(this.cot, path);
   }
 
   buscarCliente(){
@@ -284,8 +318,13 @@ export class QuotationComponent implements OnInit {
     }
   }
   
-  seleccionarCliente(id: string){
+  seleccionarCliente(id: string, nombre:string, apellido:string, dpi:string, direccion:string, telefono:string){
     this.cotizacion.idCliente=id;
+    this.datosPDF.clientNombre=nombre;
+    this.datosPDF.clientApellido= apellido;
+    this.datosPDF.clientDpi=dpi;
+    this.datosPDF.clientDireccion= direccion;
+    this.datosPDF.clientTelefono= telefono;
       Swal.fire({
         icon: 'success',
         title: 'Cliente seleccionado con exito!',
@@ -294,8 +333,12 @@ export class QuotationComponent implements OnInit {
       })
     }
   
-  seleccionarVehiculo(id: string){
+  seleccionarVehiculo(id: string, nombre:string, modelo: string, marca: string, color: string){
       this.cotizacion.idVehiculo=id;
+      this.datosPDF.autoNombre=nombre;
+      this.datosPDF.autoModelo=modelo;
+      this.datosPDF.autoMarca=marca;
+      this.datosPDF.autoColor=color;
       Swal.fire({
         icon: 'success',
         title: 'Vehiculo seleccionado con exito!',
@@ -304,5 +347,73 @@ export class QuotationComponent implements OnInit {
       })
     }
 
+    guardarCotizacion(guardarCot:{}){
+      if(this.cotizacion.idCliente=="" || this.cotizacion.idVehiculo=="" || this.cot.pagos.length==0){
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al generar venta',
+          text: 'Para generar una venta, primero genere una cotizacion',
+        })
+        return;
+      }
+      Swal.fire({
+        icon: 'success',
+        title: 'Venta generada y guardada con exito!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      const path = 'cotizacion/';
+      this.dataServices.createDoc(guardarCot, path);
+    }
+
+    public generarPDF() {
+      
+      var doc = new jspdf('p','pt', 'a4');
+      doc.setFontSize(12);
+      doc.setFontStyle('bold');
+      doc.setTextColor('#0d32ec');
+      doc.text('DATOS DEL CLIENTE',40,25);
+      doc.setTextColor('#000000');
+      doc.text('Nombre:                                                                        DPI:',40,50);
+      doc.setFontStyle('normal');
+      doc.text(this.datosPDF.clientNombre+' '+this.datosPDF.clientApellido,90,50);
+      doc.text(this.datosPDF.clientDpi,355,50,);
+      doc.setFontStyle('bold');
+      doc.text('Direccion:',40,65);
+      doc.text('Telefono:',40,80);
+      doc.setFontStyle('normal');
+      doc.text(this.datosPDF.clientDireccion,100,65);
+      doc.text(this.datosPDF.clientTelefono,95,80);
+      doc.setFontStyle('bold');
+      doc.setTextColor('#0d32ec');
+      doc.text('DATOS DEL VEHICULO',40,110);
+      doc.setTextColor('#000000');
+      doc.text('Nombre:',40,135);
+      doc.text('Modelo:',40,150);
+      doc.text('Marca:',40,165);
+      doc.text('Color:',40,180);
+      doc.setFontStyle('normal');
+      doc.text(this.datosPDF.autoNombre,95,135);
+      doc.text(this.datosPDF.autoModelo,90,150);
+      doc.text(this.datosPDF.autoMarca,85,165);
+      doc.text(this.datosPDF.autoColor,80,180);
+      doc.autoTable({
+        html:'#table',
+        startY:200,
+        styles:{
+          fontSize:10,
+          cellWidth:'wrap'
+        },
+        columnStyles:{
+          1:{
+            columnWidth:'auto'
+          }
+        }
+      });
+      doc.setFontSize(12);
+      doc.setFontStyle('normal');
+      doc.text('Firma Vendedor _______________________      Firma Cliente  _______________________',300,815,'center');
+      doc.save(`${new Date().toISOString()}_Cotizacion.pdf`);
+    }
 
 }

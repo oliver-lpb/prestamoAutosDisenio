@@ -10,11 +10,10 @@ export interface Quotation {
     idCliente: string;
     vehiculoBusqueda: string;
     idVehiculo: string;
-    foto: string;
     capital: number;
     resultado: number;
     saldo: number;
-    porcentajeVariable: number;  
+    porcentajeVariable: number;
 }
 
 export interface Cotizacion {
@@ -31,4 +30,16 @@ export interface listaPago {
     capitalCotizacion: number;
     saldoCotizacion: number;
     firmaPago: string;
+}
+
+export interface datosPDF{
+    clientNombre:string;
+    clientApellido:string;
+    clientDpi:string;
+    clientDireccion:string;
+    clientTelefono:string;
+    autoNombre:string;
+    autoModelo:string;
+    autoMarca:string;
+    autoColor:string;
 }
