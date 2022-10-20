@@ -36,6 +36,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ValidationRolComponent } from './page/validation-rol/validation-rol.component';
 import { VehicleComponent } from './page/vehicle/vehicle.component';
 import { AddVehicleComponent } from './page/add-vehicle/add-vehicle.component';
+import { ReporteCapitalComponent } from './page/reporte-capital/reporte-capital.component';
+import { ReportesComponent } from './page/reportes/reportes.component';
 
 
 
@@ -55,6 +57,8 @@ import { AddVehicleComponent } from './page/add-vehicle/add-vehicle.component';
     ValidationRolComponent,
     VehicleComponent,
     AddVehicleComponent,
+    ReporteCapitalComponent,
+    ReportesComponent,
     
   ],
   imports: [

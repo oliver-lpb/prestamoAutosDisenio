@@ -48,7 +48,7 @@ export class LogComponent implements OnInit {
     this.seleccionado.emit(false)
   }
 
-
+  
 
   ingresar() {
     const { email, pass } = this.usario
@@ -58,6 +58,8 @@ export class LogComponent implements OnInit {
         if (response.user?.emailVerified) {
           this.router.navigate(['/home']);
           this.seleccionado.emit(true);
+          console.log('aqui va el status',email)
+          localStorage.setItem('correo',email);
 
         } else {
           alert('No esta verificado revise el correo')

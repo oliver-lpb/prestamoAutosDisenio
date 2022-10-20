@@ -70,6 +70,12 @@ export class FullComponent {
     },
 
     {
+      link: "/reportes",
+      icon: "layers",
+      menu: "Reportes",
+    },
+
+    {
       link: "/users",
       icon: "disc",
       menu: "Usuarios",

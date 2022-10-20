@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 //agrega firebase
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore} from '@angular/fire/compat/firestore';
+import { Firestore, collection, addDoc, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
 //modelo para guardar y recibir datos de firebase
 import { userModel } from '../models/user.model';
 //dependecia para usar Subject y Observable para obtener datos desde firebase
@@ -14,6 +15,8 @@ import { userAdminModel } from '../models/adminUser.model';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { ref } from 'firebase/storage';
+import reporteCapitaInterface from '../utils/reporteCapital.interface';
+import userLock from '../utils/userLock.inteface';
 
 
 @Injectable({
@@ -23,7 +26,7 @@ export class DatosService {
 
     private userModel$ = new Subject<any>();
 
-    constructor(private firebase: AngularFirestore, public storage: AngularFireStorage) { }
+    constructor(private firebase: AngularFirestore, public storage: AngularFireStorage, private firestore: Firestore) { }
 //guardado de usario
     saveUser(userForm: userModel): Promise<any> {
         return this.firebase.collection('usuarios').add(userForm);
@@ -38,7 +41,6 @@ export class DatosService {
     actualizaUsuario(id: string, data: any): Promise<any> {
         return this.firebase.collection('usuarios').doc(id).update(data);
     }
-
 
 //guardado de vehiculo
     saveVehicle(userForm: userModel): Promise<any> {
@@ -60,6 +62,7 @@ export class DatosService {
     saveUserAdmin(userForm: userAdminModel): Promise<any> {
         return this.firebase.collection('usuariosAdmin').add(userForm);
     }
+
     getUserAdmin(): Observable<any> {
         return this.firebase.collection('usuariosAdmin', ref => ref.orderBy('correo', 'asc')).snapshotChanges();
     }
@@ -72,14 +75,9 @@ export class DatosService {
         return this.firebase.collection('usuarios').doc(id).update(tarjeta);
     }
 
-
-   
-
     correoAdmins(correo: string) {
         return this.firebase.collection('usuariosAdmin', ref => ref.where('correo', '==', correo)).valueChanges;
     }
-
-    
 
     uptoadlmage(file: any, path: string, nombre: string): Promise<string> {
 
@@ -122,5 +120,20 @@ export class DatosService {
     getVehicul(modeloVehiculo:string){
         return this.firebase.collection('vehiculo',ref=> ref.where('modelo','==', modeloVehiculo)).snapshotChanges();
     }
+    
+    getreporteCapital(): Observable<reporteCapitaInterface[]> {
+        const placeRef = collection(this.firestore, 'venta');
+        return collectionData(placeRef, { idField: 'id' }) as Observable<reporteCapitaInterface[]>;
+    }
+
+    getUsersLock(): Observable<userLock[]>{
+        const userRef = collection(this.firestore,'usuariosAdmin');
+        return collectionData(userRef,{ idField: 'id'}) as Observable<userLock[]>;
+    }
+
+    getUsersLockDos(correo:any){
+        return this.firebase.collection('usuariosAdmin', ref => ref.where('correo','==', correo)).snapshotChanges();
+    }
+    
 
 }

@@ -33,6 +33,8 @@ import { RoleGuardGuard } from './lock/role-guard.guard';
 import { ValidationRolComponent } from './page/validation-rol/validation-rol.component';
 import { VehicleComponent } from './page/vehicle/vehicle.component';
 import { AddVehicleComponent } from './page/add-vehicle/add-vehicle.component';
+import { ReporteCapitalComponent } from './page/reporte-capital/reporte-capital.component';
+import { ReportesComponent } from './page/reportes/reportes.component';
 
 const uIdAdmin = 'rCNEiGvcAjh4jg90m79T2Jr24Av2';
 const onlyAdmnin = () => map((user:any) => {
@@ -47,7 +49,12 @@ const routes: Routes = [
     component:FullComponent,
     children: [
       {path:"", redirectTo:"/login", pathMatch:"full"},
-      {path:"home", component:DashboardComponent},
+      {path:"home", component:DashboardComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria', 'ventas']
+      }
+      },
       {path:"alerts", component:AlertsComponent},
       {path:"forms", component:FormsComponent},
       {path:"table", component:ProductComponent},
@@ -88,7 +95,7 @@ const routes: Routes = [
       path: 'editCliente/:id',component:AdClientesComponent,
       canActivate: [AngularFireAuthGuard, RoleGuardGuard],
       data:{
-        expectedRoles:['gerencia', 'secretaria']
+        expectedRoles:['gerencia', 'secretaria', 'ventas']
       }
     },
 
@@ -140,6 +147,13 @@ const routes: Routes = [
     },
     //vehiculos
 
+    {
+      path: 'reportes',component:ReportesComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria']
+      }
+    },
     
     
     {path:"recuperar", component:RetrivePasswordComponent, 
