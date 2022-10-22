@@ -223,21 +223,24 @@
 
                     <br>
                     <div class="row">
-                        <div class="col">
-                            <label class="form-control-lg mt-3"> <p>Fecha de pago</p> </label> <br>
+                        <div class>
+                            <label class="form-control-lg mt-3"> Fecha de pago</label> 
                             <input type="date" placeholder="Fecha de pago" [(ngModel)]='cotizacion.fechaPago'
                                 name="fechaPago" class="form-control">
-                        </div>
-                        <br>
-                        <div class="col">
-                            <label class="form-control-lg mt-3"> <p>Periodo de pago</p> </label> <br>
-                            <select name="periodoPagos" [(ngModel)]='cotizacion.periodoPago' name="periodoPago"
-                                class="form-control">
-                                <option value="mensual">Mensual</option>
-                                <option value="quincenal">Quincenal</option>
-                                <option value="semanal">Semanal</option>
-                            </select>
-                        </div>
+                       
+                                <label class="form-control-lg mt-3">     Periodo de pago </label> 
+                                <select name="periodoPagos" [(ngModel)]='cotizacion.periodoPago' name="periodoPago"
+                                    class="    form-control">
+                                    <option value="mensual">Mensual</option>
+                                    <option value="quincenal">Quincenal</option>
+                                    <option value="semanal">Semanal</option>
+                                </select>
+                       
+                            </div>
+                       
+                        
+                          
+                        
                     </div>
                     <br>
                     <div class="mt-3">
@@ -285,9 +288,18 @@
             </table>
         </div>
     </div>
-    <button mat-raised-button class="me-8 mb-8" color="primary"  
-                        (click)="generarPDF()">Imprimir PDF</button>
-                        <button mat-raised-button class="me-8 mb-8" color="primary"  
-                        (click)="guardarCotizacion(cot) ">Generar Venta</button>
+
+    <div class="mt-3">
+        <button (click)="generarPDF()" mat-raised-button class="me-8 mb-8" color="warn" type="submit">Imprimir PDF</button>
+        <button (click)="guardarCotizacion(cot)" mat-raised-button class="me-8 mb-8" color="accent" type="submit">Generar Venta</button>
+
+    </div>
+
+    
+    
+
+
+    
+    
 </div>
 </main>
