@@ -3,6 +3,6 @@ export default interface reporteCapitaInterface {
     cantidadPrestamo: number;
     idCliente: string;
     idCotizacion: string;
-    fecha: string;
+    fechaCreacion: number;
     
 }

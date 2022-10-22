@@ -1,0 +1,34 @@
+
+<!-- Daily Activity -->
+<mat-card class="w-100">
+    <mat-card-content>
+        <h4 class="mb-56">Prestamos</h4>
+
+        <div class="table-responsive">
+            <table mat-table [dataSource]="ventasGuadadas" class="text-nowrap w-100">
+
+                <!-- Assigned Column -->
+                <ng-container matColumnDef="Prestamo">
+                    <th mat-header-cell *matHeaderCellDef> Cantidad del Prestamo </th>
+                    <td mat-cell *matCellDef="let element">
+                        <p class="mb-0 fw-medium">Q.{{ element.fechaPago }}</p>
+                        
+                    </td>
+                </ng-container>
+                <!-- Id Column -->
+                <ng-container matColumnDef="Cliente">
+                    <th mat-header-cell *matHeaderCellDef> id del cliente Cliente </th>
+                    <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.idCliente}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Cotizacion">
+                    <th mat-header-cell *matHeaderCellDef> id de la Cotizacion </th>
+                    <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.idCotizacion}} </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

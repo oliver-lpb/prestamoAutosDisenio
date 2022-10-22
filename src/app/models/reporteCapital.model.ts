@@ -1,23 +1,23 @@
 export class ventaCapitalModel {
     id?: string;
-    cantidadPrestamo: string;
+    cantidadPrestamo: number;
     idCliente: string;
     idCotizacion: string;
     //fechas
-    fechaCreacion:Date;
+    fechaCreacion:number;
     
 
     constructor(
-        cantidadPrestamo: string,
+        cantidadPrestamo: number,
         idCliente: string,
         idCotizacion: string,
-        fechaCreacion:Date,
+        fechaCreacion:number,
         
         ){
         this.cantidadPrestamo = cantidadPrestamo;
         this.idCliente = idCliente;
         this.idCotizacion = idCotizacion;
-        this.fechaCreacion = new Date();
+        this.fechaCreacion = fechaCreacion;
         
     }
     

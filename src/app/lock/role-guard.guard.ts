@@ -27,21 +27,13 @@ export class RoleGuardGuard implements CanActivate {
       password:'',
     }];
   }
-
   rol='';
   correo:any;
+
   private isAuth(route: ActivatedRouteSnapshot):boolean{
 
     this.correo = localStorage.getItem('correo');
-    
-    
-    /*this.data.getUsersLockDos(this.correo).subscribe(place => {
-      this.user = place;
-      console.log('esto biene de authGuard')
-      this.rol = place[0].correo;
-      console.log('este es eel rol',this.rol)
-    });*/
-
+    this.rol='';
     this.data.getUsersLockDos(this.correo).subscribe(doc=>{
       this.usersDos=[];
       doc.forEach((element:any)=>{
@@ -50,13 +42,13 @@ export class RoleGuardGuard implements CanActivate {
           ...element.payload.doc.data()
         });
       });
+      
       console.log('esto es de patyrol',this.usersDos[0].rol);
       this.rol=this.usersDos[0].rol;
     })
-    
-    console.log('aqui va gard')
 
-    const roles = [this.rol]; //dinamico
+    //const roles = [rol]; //dinamico
+    const roles = ['gerencia'];
     const expectedRoles = route.data['expectedRoles'];
     const rolematchs = roles.findIndex(role => expectedRoles.indexOf(role)!== -1);
     return (rolematchs < 0) ? false : true;

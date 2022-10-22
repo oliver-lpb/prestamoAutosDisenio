@@ -17,6 +17,7 @@ import { finalize } from 'rxjs/operators';
 import { ref } from 'firebase/storage';
 import reporteCapitaInterface from '../utils/reporteCapital.interface';
 import userLock from '../utils/userLock.inteface';
+import { Cotizacion } from '../models/quotation.model';
 
 
 @Injectable({
@@ -126,13 +127,17 @@ export class DatosService {
         return collectionData(placeRef, { idField: 'id' }) as Observable<reporteCapitaInterface[]>;
     }
 
-    getUsersLock(): Observable<userLock[]>{
-        const userRef = collection(this.firestore,'usuariosAdmin');
-        return collectionData(userRef,{ idField: 'id'}) as Observable<userLock[]>;
-    }
-
     getUsersLockDos(correo:any){
         return this.firebase.collection('usuariosAdmin', ref => ref.where('correo','==', correo)).snapshotChanges();
+    }
+
+    getMesCapital(fecha:any){
+        return this.firebase.collection('venta',ref => ref.where('fechaCreacion','==', fecha)).snapshotChanges();
+    }
+
+    getCotizacion(): Observable<Cotizacion[]> {
+        const placeRef = collection(this.firestore, 'cotizacion');
+        return collectionData(placeRef, { idField: 'id' }) as Observable<Cotizacion[]>;
     }
     
 

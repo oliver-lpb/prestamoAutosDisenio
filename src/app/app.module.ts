@@ -38,6 +38,7 @@ import { VehicleComponent } from './page/vehicle/vehicle.component';
 import { AddVehicleComponent } from './page/add-vehicle/add-vehicle.component';
 import { ReporteCapitalComponent } from './page/reporte-capital/reporte-capital.component';
 import { ReportesComponent } from './page/reportes/reportes.component';
+import { ProximosPagarComponent } from './page/proximos-pagar/proximos-pagar.component';
 
 
 
@@ -59,6 +60,7 @@ import { ReportesComponent } from './page/reportes/reportes.component';
     AddVehicleComponent,
     ReporteCapitalComponent,
     ReportesComponent,
+    ProximosPagarComponent,
     
   ],
   imports: [

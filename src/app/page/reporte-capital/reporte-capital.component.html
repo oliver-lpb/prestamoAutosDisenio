@@ -1,6 +1,70 @@
 <mat-card>
     <mat-card-content>
         
-        <div> <h3>Capital General</h3> <p>{{capitalGeneral}}</p> </div>
+        <div> <h3>Capital General</h3> </div>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(0)" >Enero</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(1)">Febrero</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(2)">Marzo</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(3)">Abril</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(4)">Mayo</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(5)">Junio</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(6)">Julio</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(7)">Agosto</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(8)">Septiembre</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(9)">Octubre</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(10)">Noviembre</button>
+        <button mat-raised-button class="me-8 mb-8" color="primary" (click)="getCapital(11)">Diciembre</button>
     </mat-card-content>
+
+    <mat-card-content>
+        <div class="grid">
+            <div>
+                <h3>Total </h3>
+                <p>Q.{{capitalGeneral}}</p> 
+            </div>
+            <div class="" >
+                <div>
+                    <h3>Diezmos por el mes acumulado</h3>
+                    <p>Q.{{diezmoMes}}</p>
+                </div>
+                <button mat-raised-button class="me-8 mb-8" color="primary" (click)="calularDiezmo()">Calcular</button>
+            </div>
+        </div>
+    </mat-card-content>
+
+    
+<!-- Daily Activity -->
+<mat-card class="w-100">
+    <mat-card-content>
+        <h4 class="mb-56">Prestamos</h4>
+
+        <div class="table-responsive">
+            <table mat-table [dataSource]="capitalMesBusqueda" class="text-nowrap w-100">
+
+                <!-- Assigned Column -->
+                <ng-container matColumnDef="Prestamo">
+                    <th mat-header-cell *matHeaderCellDef> Cantidad del Prestamo </th>
+                    <td mat-cell *matCellDef="let element">
+                        <p class="mb-0 fw-medium">Q.{{ element.cantidadPrestamo }}</p>
+                        
+                    </td>
+                </ng-container>
+                <!-- Id Column -->
+                <ng-container matColumnDef="Cliente">
+                    <th mat-header-cell *matHeaderCellDef> id del cliente Cliente </th>
+                    <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.idCliente}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Cotizacion">
+                    <th mat-header-cell *matHeaderCellDef> id de la Cotizacion </th>
+                    <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.idCotizacion}} </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
+
 </mat-card>
