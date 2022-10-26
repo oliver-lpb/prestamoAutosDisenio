@@ -1,0 +1,143 @@
+<!-- Daily Activity -->
+<main> 
+
+
+    <mat-card class="w-100">
+        <mat-card-content>
+            <h4 class="mb-56">Clientes con saldo a pagar</h4>
+    
+            <div class="table-responsive">
+                <table mat-table [dataSource]="data.deudoresList" class="text-nowrap w-100">
+    
+                    <!-- Assigned Column -->
+                    <ng-container matColumnDef="Nombre">
+                        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                        <td mat-cell *matCellDef="let element">
+                            <p class="mb-0 fw-medium">{{ element.nombre }}</p>
+                            <p class="mb-0 fw-normal op-5">{{ element.apellido }}</p>
+                        </td>
+                    </ng-container>
+                    <!-- Id Column -->
+                    <ng-container matColumnDef="Correo">
+                        <th mat-header-cell *matHeaderCellDef> Correo </th>
+                        <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.correo}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="Direccion">
+                        <th mat-header-cell *matHeaderCellDef> Direccion </th>
+                        <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.direccion}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="Telefonos">
+                        <th mat-header-cell *matHeaderCellDef> Telefonos </th>
+                        <td mat-cell *matCellDef="let element">
+                        <p class="mb-0 fw-medium">{{element.telefono}}</p>
+                        <p class="mb-0 fw-normal op-5">{{ element.telefonoSecundario }}</p>
+                    </td>
+                    </ng-container>
+    
+                    <!-- Budget Column -->
+                    <ng-container matColumnDef="Botones">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-raised-button class="me-8 mb-8" color="primary"  
+                        (click)="obtenerCotizacion(element.id,element.nombre)">Ver Cuenta</button>
+                        </td>
+                    </ng-container>
+    
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+
+
+<mat-card class="w-100">
+    <div class="container mt-4 fondo">
+        <div class="card">
+            <div class="card-body">
+                <span class="h3"> Formulario Cotizacion </span>
+                <table class="table table-striped mt-5" id="table">
+                    <thead>
+                        <tr>
+                            <th>Fecha de pago</th>
+                            <th>Cuota Fija</th>
+                            <th>Interes</th>
+                            <th>Capital</th>
+                            <th>Saldo</th>
+                            <th>Firma</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let pagos of datos">
+                        <tr *ngFor="let listPago of pagos.pagos">
+                            <div *ngIf="listPago.fechaPago == 'Saldo inicial'">
+                                <span style="color: rgb(12, 0, 184);"> Nueva Cotizacion </span>
+                                <td style="color: rgb(12, 0, 184);">{{listPago.fechaPago}}</td>
+                            </div>
+                            <td>{{listPago.fechaPago}}</td>
+                            <td>{{listPago.cuotaCotizacion}}</td>
+                            <td>{{listPago.interesCotizacion}}</td>
+                            <td>{{listPago.capitalCotizacion}}</td>
+                            <td>{{listPago.saldoCotizacion}}</td>
+                            <td>{{listPago.firmaPago}}</td>
+                            <div *ngIf="listPago.fechaPago != 'Saldo inicial'">
+                               
+                                    <button mat-raised-button class="me-8 mb-8" color="primary"  
+                                (click)="pago(pagos.id,listPago.fechaPago)">Pago</button>
+                            
+                            <button mat-raised-button class="me-8 mb-8" color="primary"  
+                            (click)="mora(pagos.id,listPago.fechaPago)">Agregar mora</button>
+                        </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</mat-card>
+   
+           
+    
+<!----
+<mat-card class="w-100">
+    <div class="container mt-4 fondo">
+        <div class="card">
+            <div class="card-body">
+                <span class="h3"> Formulario Cotizacion </span>
+                <table class="table table-striped mt-5" id="table">
+                    <thead>
+                        <tr>
+                            <th>Fecha de pago</th>
+                            <th>Cuota Fija</th>
+                            <th>Interes</th>
+                            <th>Capital</th>
+                            <th>Saldo</th>
+                            <th>Firma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pagos of datos.pagos">
+                            <td>
+                            <tr *ngFor="let listPago of pagos.pagos">
+                                <td>{{listPago.fechaPago}}</td>
+                                <td>{{listPago.cuotaCotizacion| json}}</td>
+                                <td>{{listPago.interesCotizacion| json}}</td>
+                                <td>{{listPago.capitalCotizacion| json}}</td>
+                                <td>{{listPago.saldoCotizacion| json}}</td>
+                                <td>{{listPago.firmaPago| json}}</td>
+                            </tr>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</mat-card>
+--->
+
+</main>

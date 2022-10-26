@@ -36,6 +36,8 @@ import { AddVehicleComponent } from './page/add-vehicle/add-vehicle.component';
 import { ReporteCapitalComponent } from './page/reporte-capital/reporte-capital.component';
 import { ReportesComponent } from './page/reportes/reportes.component';
 import { ProximosPagarComponent } from './page/proximos-pagar/proximos-pagar.component';
+import { PagosComponent } from './page/pagos/pagos.component';
+
 
 const uIdAdmin = 'rCNEiGvcAjh4jg90m79T2Jr24Av2';
 const onlyAdmnin = () => map((user:any) => {
@@ -152,6 +154,14 @@ const routes: Routes = [
 
     {
       path: 'reportes',component:ReportesComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria']
+      }
+    },
+
+    {
+      path: 'pagos',component:PagosComponent ,
       canActivate: [AngularFireAuthGuard, RoleGuardGuard],
       data:{
         expectedRoles:['gerencia', 'secretaria']

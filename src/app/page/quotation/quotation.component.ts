@@ -81,12 +81,13 @@ export class QuotationComponent implements OnInit {
         title: 'No se ha seleccionado un cliente',
         text: 'Buscar un cliente y luego seleccionarlo antes generar la cotizacion',
       })
-    }else if(this.cotizacion.idVehiculo==""){
+    /*}else if(this.cotizacion.idVehiculo==""){
       Swal.fire({
         icon: 'error',
-        title: 'No se ha seleccionado un Vehiculo',
+        title: 'No se ha seleccion
+        ado un Vehiculo',
         text: 'Buscar un vehiculo y luego seleccionarlo antes de generar la cotizacion',
-      })
+      })*/
     }else if (this.cotizacion.monto==0){
       Swal.fire({
         icon: 'error',
@@ -119,7 +120,7 @@ export class QuotationComponent implements OnInit {
       })
     }
     if (this.cotizacion.interesTipo == 1) {
-      if (this.cotizacion.idCliente=="" ||this.cotizacion.idVehiculo=="" || this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.interesFijo == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesFijo) {
+      if (this.cotizacion.idCliente==""|| this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.interesFijo == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesFijo) {
         return;
       }
       Swal.fire({
@@ -348,7 +349,7 @@ export class QuotationComponent implements OnInit {
     }
 
     guardarCotizacion(guardarCot:{}){
-      if(this.cotizacion.idCliente=="" || this.cotizacion.idVehiculo=="" || this.cot.pagos.length==0){
+      if(this.cotizacion.idCliente=="" || this.cot.pagos.length==0){
         Swal.fire({
           icon: 'error',
           title: 'Error al generar venta',
