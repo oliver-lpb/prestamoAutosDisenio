@@ -81,6 +81,11 @@ export class FullComponent {
       menu: "Usuarios",
     },
     
+    {
+      link: "/pagos",
+      icon: "layers",
+      menu: "Pagos",
+    },
 
     /**
      * 

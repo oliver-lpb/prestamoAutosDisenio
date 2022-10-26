@@ -17,7 +17,8 @@ import { finalize } from 'rxjs/operators';
 import { ref } from 'firebase/storage';
 import reporteCapitaInterface from '../utils/reporteCapital.interface';
 import userLock from '../utils/userLock.inteface';
-import { Cotizacion } from '../models/quotation.model';
+import { Cotizacion} from '../models/quotation.model';
+import { datosDeudores } from '../models/pagos';
 
 
 @Injectable({
@@ -25,7 +26,16 @@ import { Cotizacion } from '../models/quotation.model';
 })
 export class DatosService {
 
+    cot: Cotizacion = {
+        idCliente: '',
+        idVehiculo:'',
+        pagos: [],
+      }
+      users:userModel[]=[];
+      deudoresList:datosDeudores[]=[];
+    
     private userModel$ = new Subject<any>();
+    
 
     constructor(private firebase: AngularFirestore, public storage: AngularFireStorage, private firestore: Firestore) { }
 //guardado de usario
@@ -140,5 +150,84 @@ export class DatosService {
         return collectionData(placeRef, { idField: 'id' }) as Observable<Cotizacion[]>;
     }
     
+    getCot(){
+        let datosLeible:any=[];
+        const leer = this.firebase.collection("cotizacion").get().toPromise();
+        return leer.then(resp=>{
+            console.log(resp?.docs)
+        const document: any = resp?.docs; 
+        for(let object of document ){
+            const dts:any = object.data();
+            let  datos = new datosDeudores
+            datos.id=object.id;
+            datos.idCliente=dts.idCliente;
+            datos.idVehiculo=dts.idVehiculo;
+            datosLeible.push(datos);
+        }
+        console.log(datosLeible,"datos obtenidos"); 
+        return datosLeible;
+        
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }
 
+    getCot2(id: string) {
+
+        let datosLeible:any=[];
+
+        const leer = this.firebase.collection("cotizacion").doc(id).get().toPromise();
+        return leer.then(resp=>{
+            //console.log(resp?.data())
+            const dts:any = resp?.data();
+            this.cot.id=resp?.id;
+            this.cot.idCliente=dts.idCliente;
+            this.cot.idVehiculo=dts.idVehiculo;
+            this.cot.pagos= dts.pagos;
+            datosLeible.push(this.cot);
+            //console.log(datosLeible);
+            return datosLeible;
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }
+
+    getDeudores() {
+        let listaDeudores:datosDeudores[]=[];
+        this.getUser().subscribe(doc=>{
+            this.users=[]
+            doc.forEach((element:any)=>{
+              this.users.push({
+                id: element.payload.doc.id,
+                ...element.payload.doc.data()
+              })
+            });
+          })
+          
+        this.firebase.collection('cotizacion').snapshotChanges().subscribe(
+            resp=>{
+                resp.forEach(
+                    (cliente: any)=>{
+                        let object:datosDeudores = cliente.payload.doc.data();
+                        object.id = cliente.payload.doc.id;
+                        let client = this.users.find(b =>{
+                            return b.id === object.idCliente
+                        })
+                        object.nombre= client?.nombre;
+                        object.apellido= client?.apellido;
+                        object.correo= client?.correo;
+                        object.direccion= client?.direccion;
+                        object.telefono= client?.telefono;
+                        object.telefonoSecundario= client?.telefonoSecundario;
+                        listaDeudores.push(object);
+                    }
+                )
+                this.deudoresList =[];
+                this.deudoresList= listaDeudores;
+                listaDeudores = [];
+            }
+        )
+    }
+
+    
 }
