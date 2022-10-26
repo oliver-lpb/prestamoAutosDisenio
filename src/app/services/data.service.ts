@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 //agrega firebase
 import { AngularFirestore} from '@angular/fire/compat/firestore';
-import { Firestore, collection, addDoc, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, doc, deleteDoc, arrayUnion } from '@angular/fire/firestore';
 //modelo para guardar y recibir datos de firebase
 import { userModel } from '../models/user.model';
 //dependecia para usar Subject y Observable para obtener datos desde firebase
@@ -117,6 +117,10 @@ export class DatosService {
         return this.firebase.collection('usuarios',ref=> ref.where('dpi','==', dpi)).snapshotChanges();
     }
 
+    getClientId(ID:string){
+        return this.firebase.collection('usuarios',ref=> ref.where('id','==', ID)).snapshotChanges();
+    }
+
     //Busqueda vehiculo
     getVehicul(modeloVehiculo:string){
         return this.firebase.collection('vehiculo',ref=> ref.where('modelo','==', modeloVehiculo)).snapshotChanges();
@@ -139,6 +143,19 @@ export class DatosService {
         const placeRef = collection(this.firestore, 'cotizacion');
         return collectionData(placeRef, { idField: 'id' }) as Observable<Cotizacion[]>;
     }
+
+    
+
+    getCotizacionDos(): Observable<any>{
+        return this.firebase.collection('listaPagosSemana', ref => ref.orderBy('nombre', 'desc')).snapshotChanges();
+    }
+
+    updateDoc2(data: any, path: string, id: string) {
+        const collection = this.firebase.collection(path);
+        return collection.doc(id).update({ cotizacion: arrayUnion({data}) }).catch((err: any) => {
+        console.error(`oopsie - ${err.message}`)}) 
+    }
+    
     
 
 }

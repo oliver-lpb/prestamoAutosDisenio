@@ -52,15 +52,15 @@ export class LogComponent implements OnInit {
 
   ingresar() {
     const { email, pass } = this.usario
+    localStorage.setItem('correo',email);
 
     this.authServices.login(email, pass)
       .then(response => {
         if (response.user?.emailVerified) {
-          this.router.navigate(['/home']);
           this.seleccionado.emit(true);
           console.log('aqui va el status',email)
-          localStorage.setItem('correo',email);
-
+          this.router.navigate(['/valid']);
+          
         } else {
           alert('No esta verificado revise el correo')
         }

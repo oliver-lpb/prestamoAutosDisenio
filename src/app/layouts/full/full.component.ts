@@ -48,7 +48,7 @@ export class FullComponent {
 
   sidebarMenu: sidebarMenu[] = [
     {
-      link: "/home",
+      link: "/casa",
       icon: "home",
       menu: "Dashboard",
     },
@@ -167,5 +167,7 @@ export class FullComponent {
   logOut(){
     this.autenticacion.logOut();
     this.router.navigate(['/signIn']);
+    localStorage.removeItem('id');
+    localStorage.removeItem('correo');
   }
 }

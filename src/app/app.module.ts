@@ -22,7 +22,7 @@ import { ComponentsModule } from './components/components.module';
 import { ClientesComponent } from './page/clientes/clientes.component';
 import { AdClientesComponent } from './page/ad-clientes/ad-clientes.component';
 import { LogComponent } from './login/log/log.component';
-import { CommonModule } from '@angular/common';
+//import { CommonModule } from '@angular/common';
 import { UsersComponent } from './page/users/users.component';
 import { RetrivePasswordComponent } from './page/retrive-password/retrive-password.component';
 import { QuotationComponent } from './page/quotation/quotation.component';
@@ -73,7 +73,7 @@ import { ProximosPagarComponent } from './page/proximos-pagar/proximos-pagar.com
     ComponentsModule,
     FormsModule,
      //ComponentsModule,
-    CommonModule,
+    // CommonModule,
      //para conectar a firebase
     AngularFireModule.initializeApp(environment.firebaseConfig),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),

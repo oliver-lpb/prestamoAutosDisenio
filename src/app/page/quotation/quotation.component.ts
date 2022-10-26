@@ -272,7 +272,7 @@ export class QuotationComponent implements OnInit {
       });
     })
     
-    if(this.users.length==0){
+    if(this.users.length>0){
       Swal.fire({
         icon: 'error',
         title: 'Cliente No encontrado',
@@ -300,7 +300,7 @@ export class QuotationComponent implements OnInit {
         })
       });
     })
-    if(this.vehicle.length===0){
+    if(this.vehicle.length>0){
       Swal.fire({
         icon: 'error',
         title: 'Modelo de vehiculo No encontrado',

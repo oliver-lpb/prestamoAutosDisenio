@@ -18,6 +18,8 @@ export class RoleGuardGuard implements CanActivate {
   
   user:userLock[];
   usersDos:userAdminModel[]=[];
+  rol:string='';
+  correo:any;
 
   constructor(private data:DatosService){
     this.user = [{
@@ -27,31 +29,35 @@ export class RoleGuardGuard implements CanActivate {
       password:'',
     }];
   }
-  rol='';
-  correo:any;
+
 
   private isAuth(route: ActivatedRouteSnapshot):boolean{
 
     this.correo = localStorage.getItem('correo');
-    this.rol='';
+
     this.data.getUsersLockDos(this.correo).subscribe(doc=>{
-      this.usersDos=[];
+      this.user=[];
       doc.forEach((element:any)=>{
-        this.usersDos.push({
+        this.user.push({
           id: element.payload.doc.id,
           ...element.payload.doc.data()
         });
+        console.log('esto es de patyrol paso uno',this.user[0].rol);
+        this.rol=this.user[0].rol;
+        console.log('esto es de this rol paso dos',this.rol)
       });
-      
-      console.log('esto es de patyrol',this.usersDos[0].rol);
-      this.rol=this.usersDos[0].rol;
-    })
 
-    //const roles = [rol]; //dinamico
-    const roles = ['gerencia'];
-    const expectedRoles = route.data['expectedRoles'];
-    const rolematchs = roles.findIndex(role => expectedRoles.indexOf(role)!== -1);
-    return (rolematchs < 0) ? false : true;
+
+    })
+    
+      console.log('esto es de patyrol pas o3',this.rol);
+      const roles = [this.rol]; //dinamico
+      console.log('esto es de patyrol pas o4',this.rol);
+      //const roles = ['gerencia'];
+      const expectedRoles = route.data['expectedRoles'];
+      const rolematchs = roles.findIndex(role => expectedRoles.indexOf(role)!== -1);
+      return (rolematchs < 0) ? false : true;
+
   }
   
 }

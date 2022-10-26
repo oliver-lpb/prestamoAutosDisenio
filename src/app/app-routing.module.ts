@@ -35,6 +35,7 @@ import { VehicleComponent } from './page/vehicle/vehicle.component';
 import { AddVehicleComponent } from './page/add-vehicle/add-vehicle.component';
 import { ReporteCapitalComponent } from './page/reporte-capital/reporte-capital.component';
 import { ReportesComponent } from './page/reportes/reportes.component';
+import { ProximosPagarComponent } from './page/proximos-pagar/proximos-pagar.component';
 
 const uIdAdmin = 'rCNEiGvcAjh4jg90m79T2Jr24Av2';
 const onlyAdmnin = () => map((user:any) => {
@@ -49,6 +50,7 @@ const routes: Routes = [
     component:FullComponent,
     children: [
       {path:"", redirectTo:"/login", pathMatch:"full"},
+
       {path:"home", component:DashboardComponent,
       canActivate: [AngularFireAuthGuard, RoleGuardGuard],
       data:{
@@ -74,7 +76,12 @@ const routes: Routes = [
 
       //extras
 
-      
+    {path: 'casa',component:ProximosPagarComponent,
+    canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+    data:{
+      expectedRoles:['gerencia', 'secretaria', 'ventas']
+    }
+      },
 
     {path:"clientesVersionDos", component:ClientesComponent, 
     canActivate: [AngularFireAuthGuard, RoleGuardGuard],
@@ -139,11 +146,7 @@ const routes: Routes = [
     },
 
     {
-      path: 'valid',component:ValidationRolComponent,
-      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
-      data:{
-        expectedRoles:['gerencia', 'secretaria']
-      }
+      path: 'valid',component:ValidationRolComponent
     },
     //vehiculos
 

@@ -1,8 +1,10 @@
 import { getLocaleDayNames } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { elementAt } from 'rxjs';
+import { getUserModel } from 'src/app/models/getUser.model';
 import { Cotizacion, listaPago } from 'src/app/models/quotation.model';
 import { DatosService } from 'src/app/services/data.service';
+import listaPagosSemana from 'src/app/utils/prestamosSemana.interface';
 
 @Component({
   selector: 'app-proximos-pagar',
@@ -11,31 +13,24 @@ import { DatosService } from 'src/app/services/data.service';
 })
 export class ProximosPagarComponent implements OnInit {
   
-  ventasGuadadas: Cotizacion[]=[];
-  listaPafos: listaPago[]=[];
+  ventasGuadadas: listaPagosSemana[]=[];
   displayedColumns: string[] = ['Prestamo', 'Cliente', 'Cotizacion'];
 
   constructor(private data:DatosService) { 
   
-    
   }
 
 
   ngOnInit(): void {
     this.obtenerTarjeta();
-    
-    console.log(this.fechaHoy,'fecha de hoy?', this.dia,'este es el dia')
+    //console.log(this.fechaHoy,'fecha de hoy?', this.dia,'este es el dia')
   }
 
-  fechaHoy = new Date();
-  dia = this.fechaHoy.getDay()
+  
 
   obtenerTarjeta(){
-    /*this.data.getCotizacion().subscribe(cotizacion=>{
-    this.ventasGuadadas = cotizacion;
-    });*/
-    this.ventasGuadadas=[];
-    this.data.getCotizacion().subscribe(doc=>{
+    this.data.getCotizacionDos().subscribe(doc=>{
+      this.ventasGuadadas=[]
       doc.forEach((element:any)=>{
         this.ventasGuadadas.push({
           id: element.payload.doc.id,
@@ -43,9 +38,6 @@ export class ProximosPagarComponent implements OnInit {
         })
       });
     })
-    
-    console.log(this.ventasGuadadas,'esta es le rayd')
-
   }
 
   

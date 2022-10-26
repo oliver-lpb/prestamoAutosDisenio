@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-validation-rol',
@@ -9,15 +10,16 @@ export class ValidationRolComponent implements OnInit {
 
   @Output() seleccionado: EventEmitter<boolean>;
 
-  constructor() { 
+  constructor(private router: Router,) { 
     this.seleccionado = new EventEmitter();
   }
 
   ngOnInit(): void {
+    this.validacicion();
   }
 
   validacicion(){
-    this.seleccionado.emit(true)
+    this.router.navigate(['/casa']);
   }
 
 }
