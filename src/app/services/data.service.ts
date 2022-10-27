@@ -200,6 +200,7 @@ export class DatosService {
             this.cot.id=resp?.id;
             this.cot.idCliente=dts.idCliente;
             this.cot.idVehiculo=dts.idVehiculo;
+            this.cot.mora=dts.mora;
             this.cot.pagos= dts.pagos;
             datosLeible.push(this.cot);
             //console.log(datosLeible);
@@ -236,6 +237,8 @@ export class DatosService {
                         object.direccion= client?.direccion;
                         object.telefono= client?.telefono;
                         object.telefonoSecundario= client?.telefonoSecundario;
+                        object.dpi= client?.dpi;
+                        object.NumNit= client?.NumNit;
                         listaDeudores.push(object);
                     }
                 )

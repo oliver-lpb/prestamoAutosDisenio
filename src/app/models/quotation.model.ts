@@ -14,12 +14,14 @@ export interface Quotation {
     resultado: number;
     saldo: number;
     porcentajeVariable: number;
+    mora: number;
 }
 
 export interface Cotizacion {
     id?: string;
     idCliente: string;
     idVehiculo: string;
+    mora?: number;
     pagos: listaPago[];
 }
 
@@ -42,4 +44,12 @@ export interface datosPDF{
     autoModelo:string;
     autoMarca:string;
     autoColor:string;
+    clientNit?:string;
+}
+
+export interface ventaDatos{
+    id?: string;
+    ventaNombre:string;
+    ventaFecha:string;
+    ventaCantidad:number;
 }

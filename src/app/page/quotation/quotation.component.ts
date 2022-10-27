@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, NgModel, Validators } from '@angular/forms';
 import { elementAt, Observable } from 'rxjs';
-import { Cotizacion, Quotation, datosPDF } from 'src/app/models/quotation.model';
+import { Cotizacion, Quotation, datosPDF, ventaDatos } from 'src/app/models/quotation.model';
 import { userModel } from 'src/app/models/user.model';
 import { DatosService } from 'src/app/services/data.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 //para imprimir pdf
 import jspdf from 'jspdf';
 import 'jspdf-autotable';
+import { logoPDF } from 'src/app/models/pagos';
 
 @Component({
   selector: 'app-quotation',
@@ -37,11 +38,13 @@ export class QuotationComponent implements OnInit {
     resultado: 0,
     saldo: 0,
     porcentajeVariable: 0,
+    mora:0
   }
 
   cot: Cotizacion = {
     idCliente: '',
     idVehiculo:'',
+    mora:0,
     pagos: [],
   }
 
@@ -56,6 +59,13 @@ export class QuotationComponent implements OnInit {
     autoMarca:'',
     autoColor:'',
   } 
+
+  venta: ventaDatos={
+    ventaNombre:'',
+    ventaFecha:'',
+    ventaCantidad:0,
+  }
+
 
   users:userModel[]=[];
   displayedColumns: string[] = ['Nombre', 'DPI', 'NIT', 'Telefono','Direccion','Botones'];
@@ -118,9 +128,14 @@ export class QuotationComponent implements OnInit {
         icon: 'error',
         title: 'Ingrese el periodo de pago (Mensual/Quincena/Semanal)',
       })
-    }
+    }else if (this.cotizacion.mora==0){
+      Swal.fire({
+        icon: 'error',
+        title: 'Ingrese una mora en caso de atrasos',
+      })
+    } 
     if (this.cotizacion.interesTipo == 1) {
-      if (this.cotizacion.idCliente==""|| this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.interesFijo == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesFijo) {
+      if (this.cotizacion.idCliente==""|| this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.interesFijo == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesFijo || this.cotizacion.mora==0) {
         return;
       }
       Swal.fire({
@@ -131,7 +146,7 @@ export class QuotationComponent implements OnInit {
       })
       this.calcularInteresFijo();
     } else if (this.cotizacion.interesTipo == 2) {
-      if (this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesPorcentaje || this.cotizacion.interesPorcentaje >= this.cotizacion.cuotaDeseada) {
+      if (this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesPorcentaje || this.cotizacion.interesPorcentaje >= this.cotizacion.cuotaDeseada || this.cotizacion.mora==0) {
         console.log("Error datos no renellados o Interes % mayor a la cuota deseada")
         return;
       } this.calcularInteresPorcentaje();
@@ -162,7 +177,16 @@ export class QuotationComponent implements OnInit {
     if (this.cotizacion.periodoPago == "mensual") {
       fecha.setDate(fecha.getDate() + 1);
       this.cotizacion.fechaPago = (fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
+    } else if (this.cotizacion.periodoPago == "quincenal") {
+      fecha.setDate(fecha.getDate() );
+      this.cotizacion.fechaPago = (fecha.getDate() + 1 + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
+    } else if (this.cotizacion.periodoPago == "semanal") {
+      fecha.setDate(fecha.getDate() );
+      this.cotizacion.fechaPago = (fecha.getDate() + 1 + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
     }
+
+    this.venta.ventaFecha=this.cotizacion.fechaPago;
+    this.venta.ventaCantidad=this.cotizacion.monto;
 
     while (contador >= 0) {
       //capital calculo ciclo
@@ -172,13 +196,14 @@ export class QuotationComponent implements OnInit {
 
       this.cot.idCliente = this.cotizacion.idCliente;
       this.cot.idVehiculo = this.cotizacion.idVehiculo;
+      this.cot.mora = this.cotizacion.mora;
       this.cot.pagos.push({
         "fechaPago": this.cotizacion.fechaPago,
         "cuotaCotizacion": this.cotizacion.cuotaDeseada,
         "interesCotizacion": this.cotizacion.interesPorcentaje,
         "capitalCotizacion": this.cotizacion.capital,
         "saldoCotizacion": this.cotizacion.saldo,
-        "firmaPago": "Boleta de pago"
+        "firmaPago": "PAGO NO REALIZADO"
       });
 
 
@@ -223,9 +248,17 @@ export class QuotationComponent implements OnInit {
     if (this.cotizacion.periodoPago == "mensual") {
       fecha.setDate(fecha.getDate() + 1);
       this.cotizacion.fechaPago = (fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
+    } else if (this.cotizacion.periodoPago == "quincenal") {
+      fecha.setDate(fecha.getDate() );
+      this.cotizacion.fechaPago = (fecha.getDate() + 1 + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
+    } else if (this.cotizacion.periodoPago == "semanal") {
+      fecha.setDate(fecha.getDate() );
+      this.cotizacion.fechaPago = (fecha.getDate() + 1 + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
+      
     }
 
-
+    this.venta.ventaFecha=this.cotizacion.fechaPago;
+    this.venta.ventaCantidad=this.cotizacion.monto;
     //condicion para elegir el tipo de interes
     while (contador >= 1) {
       //capital calculo ciclo
@@ -235,13 +268,14 @@ export class QuotationComponent implements OnInit {
 
       this.cot.idCliente = this.cotizacion.idCliente;
       this.cot.idVehiculo = this.cotizacion.idVehiculo;
+      this.cot.mora = this.cotizacion.mora;
       this.cot.pagos.push({
         "fechaPago": this.cotizacion.fechaPago,
         "cuotaCotizacion": this.cotizacion.cuotaDeseada,
         "interesCotizacion": this.cotizacion.interesFijo,
         "capitalCotizacion": this.cotizacion.capital,
         "saldoCotizacion": this.cotizacion.saldo,
-        "firmaPago": "Boleta de pago"
+        "firmaPago": "PAGO NO REALIZADO"
       });
     
 
@@ -326,6 +360,7 @@ export class QuotationComponent implements OnInit {
     this.datosPDF.clientDpi=dpi;
     this.datosPDF.clientDireccion= direccion;
     this.datosPDF.clientTelefono= telefono;
+    this.venta.ventaNombre=nombre;
       Swal.fire({
         icon: 'success',
         title: 'Cliente seleccionado con exito!',
@@ -365,42 +400,50 @@ export class QuotationComponent implements OnInit {
       })
       const path = 'cotizacion/';
       this.dataServices.createDoc(guardarCot, path);
+      const path2 = 'venta/';
+      this.dataServices.createDoc(this.venta, path2);
     }
 
     public generarPDF() {
-      
+      var tablaY=135;
       var doc = new jspdf('p','pt', 'a4');
+      doc.addImage (logoPDF, 'PNG', 40, 25, 200, 75);
       doc.setFontSize(12);
       doc.setFontStyle('bold');
       doc.setTextColor('#0d32ec');
-      doc.text('DATOS DEL CLIENTE',40,25);
+      doc.text('DATOS DEL CLIENTE',305,30);
       doc.setTextColor('#000000');
-      doc.text('Nombre:                                                                        DPI:',40,50);
+      doc.text('Nombre:',255,50);
+      doc.text('DPI:',255,65);
       doc.setFontStyle('normal');
-      doc.text(this.datosPDF.clientNombre+' '+this.datosPDF.clientApellido,90,50);
-      doc.text(this.datosPDF.clientDpi,355,50,);
+      doc.text(this.datosPDF.clientNombre+' '+this.datosPDF.clientApellido,305,50);
+      doc.text(this.datosPDF.clientDpi,280,65,);
       doc.setFontStyle('bold');
-      doc.text('Direccion:',40,65);
-      doc.text('Telefono:',40,80);
+      doc.text('Direccion:',255,80);
+      doc.text('Telefono:',255,95);
       doc.setFontStyle('normal');
-      doc.text(this.datosPDF.clientDireccion,100,65);
-      doc.text(this.datosPDF.clientTelefono,95,80);
-      doc.setFontStyle('bold');
-      doc.setTextColor('#0d32ec');
-      doc.text('DATOS DEL VEHICULO',40,110);
-      doc.setTextColor('#000000');
-      doc.text('Nombre:',40,135);
-      doc.text('Modelo:',40,150);
-      doc.text('Marca:',40,165);
-      doc.text('Color:',40,180);
-      doc.setFontStyle('normal');
-      doc.text(this.datosPDF.autoNombre,95,135);
-      doc.text(this.datosPDF.autoModelo,90,150);
-      doc.text(this.datosPDF.autoMarca,85,165);
-      doc.text(this.datosPDF.autoColor,80,180);
+      doc.text(this.datosPDF.clientDireccion,315,80);
+      doc.text(this.datosPDF.clientTelefono,310,95);
+      if (this.datosPDF.autoNombre!=""){
+        doc.setFontStyle('bold');
+        doc.setTextColor('#0d32ec');
+        doc.text('DATOS DEL VEHICULO',60,115);
+        doc.setTextColor('#000000');
+        doc.text('Nombre:',40,135);
+        doc.text('Modelo:',40,150);
+        doc.text('Marca:',40,165);
+        doc.text('Color:',40,180);
+        doc.setFontStyle('normal');
+        doc.text(this.datosPDF.autoNombre,95,135);
+        doc.text(this.datosPDF.autoModelo,90,150);
+        doc.text(this.datosPDF.autoMarca,85,165);
+        doc.text(this.datosPDF.autoColor,80,180);
+        tablaY+=65;
+      }
+
       doc.autoTable({
         html:'#table',
-        startY:200,
+        startY:tablaY,
         styles:{
           fontSize:10,
           cellWidth:'wrap'

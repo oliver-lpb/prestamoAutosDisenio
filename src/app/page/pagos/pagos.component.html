@@ -41,7 +41,8 @@
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let element">
                             <button mat-raised-button class="me-8 mb-8" color="primary"  
-                        (click)="obtenerCotizacion(element.id,element.nombre)">Ver Cuenta</button>
+                        (click)="obtenerCotizacion(element.id, element.nombre, element.apellido, element.direccion,
+                        element.telefono, element.dpi, element.NumNit)">Ver Cuenta</button>
                         </td>
                     </ng-container>
     
@@ -68,7 +69,7 @@
                             <th>Interes</th>
                             <th>Capital</th>
                             <th>Saldo</th>
-                            <th>Firma</th>
+                            <th>Estado del pago</th>
                         </tr>
                     </thead>
                     <tbody *ngFor="let pagos of datos">
@@ -82,25 +83,23 @@
                             <td>{{listPago.interesCotizacion}}</td>
                             <td>{{listPago.capitalCotizacion}}</td>
                             <td>{{listPago.saldoCotizacion}}</td>
-                            <td>{{listPago.firmaPago}}</td>
+                            <td *ngIf="listPago.firmaPago == 'PAGO REALIZADO'" style="color: rgb(3, 160, 11);">{{listPago.firmaPago}}</td>
+                            <td *ngIf="listPago.firmaPago == 'MORA AGREGADA'" style="color: rgb(235, 4, 4);">{{listPago.firmaPago}}</td>
+                            <td *ngIf="listPago.firmaPago == 'PAGO NO REALIZADO'" style="color: rgb(0, 0, 0);">{{listPago.firmaPago}}</td>
                             <div *ngIf="listPago.fechaPago != 'Saldo inicial'">
                                
                                     <button mat-raised-button class="me-8 mb-8" color="primary"  
                                 (click)="pago(pagos.id,listPago.fechaPago)">Pago</button>
-                            
-                            <button mat-raised-button class="me-8 mb-8" color="primary"  
-                            (click)="mora(pagos.id,listPago.fechaPago)">Agregar mora</button>
                         </div>
                         </tr>
-                    </tbody>
+                    </tbody> 
                 </table>
             </div>
         </div>
     </div>
 </mat-card>
+
    
-           
-    
 <!----
 <mat-card class="w-100">
     <div class="container mt-4 fondo">
