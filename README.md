@@ -47,5 +47,14 @@ Como base de datos se utiliza Firebase para esto usamos la terminal e instlamos 
 una vez termina la descarga ingresa en la terminal el siguiente comando sin comillas "npm install firebase"
 
 
+////////////////// Tercera Parte ////////////////////
+
+Librerias para la ejecucion y generacion de PDF
+
+"npm install jspdf@1.5.3"
+
+"npm installjspdf-autotable"
+
+
 
 mas instrucciones con forme avance el proyecto
