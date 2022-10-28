@@ -69,16 +69,16 @@ export class FullComponent {
       menu: "Cotizacion",
     },
     {
+      link: "/pagos",
+      icon: "layers",
+      menu: "Pagos",
+    },
+    {
       link: "/users",
       icon: "disc",
       menu: "Usuarios",
     },
     
-    {
-      link: "/pagos",
-      icon: "layers",
-      menu: "Pagos",
-    },
 
     /**
      * 
