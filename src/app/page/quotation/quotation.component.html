@@ -6,8 +6,8 @@
         <div class="col">
            
             <mat-form-field class="w-100 fs-16" appearance="outline">
-                <mat-label>DPI</mat-label>
-                <input matInput type="text" placeholder="Introducir DPI" [(ngModel)]='cotizacion.dpiBusqueda'
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" placeholder="Introducir Nombre completo" [(ngModel)]='cotizacion.dpiBusqueda'
                 name="cliente" class="form-control">
                
             </mat-form-field>
@@ -277,12 +277,12 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let pagos of cot.pagos">
-                        <td>{{pagos.fechaPago| json}}</td>
-                        <td>{{pagos.cuotaCotizacion| json}}</td>
-                        <td>{{pagos.interesCotizacion| json}}</td>
-                        <td>{{pagos.capitalCotizacion| json}}</td>
-                        <td>{{pagos.saldoCotizacion| json}}</td>
-                        <td>{{pagos.firmaPago| json}}</td>
+                        <td>{{pagos.fechaPago}}</td>
+                        <td>{{pagos.cuotaCotizacion| currency: 'Q. '}}</td>
+                        <td>{{pagos.interesCotizacion| currency: 'Q. '}}</td>
+                        <td>{{pagos.capitalCotizacion| currency: 'Q. '}}</td>
+                        <td>{{pagos.saldoCotizacion| currency: 'Q. '}}</td>
+                        <td>{{pagos.firmaPago}}</td>
                         <td></td>
                     </tr>
                 </tbody>

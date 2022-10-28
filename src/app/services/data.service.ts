@@ -123,8 +123,8 @@ export class DatosService {
     }
 
     //busqueda cliente
-    getClient(dpi:string){
-        return this.firebase.collection('usuarios',ref=> ref.where('dpi','==', dpi)).snapshotChanges();
+    getClient(nombre:string){
+        return this.firebase.collection('usuarios',ref=> ref.where('nombre','==', nombre)).snapshotChanges();
     }
 
     getClientId(ID:string){

@@ -79,7 +79,6 @@ export class QuotationComponent implements OnInit {
 
   tipoInteres(tipo: number) {
     this.cotizacion.interesTipo = tipo;
-    //console.log(this.cotizacion.interesTipo)
   }
   comprobacionDatos() {
     this.cotizacion.porcentajeVariable = this.cotizacion.interesPorcentaje;
@@ -91,13 +90,6 @@ export class QuotationComponent implements OnInit {
         title: 'No se ha seleccionado un cliente',
         text: 'Buscar un cliente y luego seleccionarlo antes generar la cotizacion',
       })
-    /*}else if(this.cotizacion.idVehiculo==""){
-      Swal.fire({
-        icon: 'error',
-        title: 'No se ha seleccion
-        ado un Vehiculo',
-        text: 'Buscar un vehiculo y luego seleccionarlo antes de generar la cotizacion',
-      })*/
     }else if (this.cotizacion.monto==0){
       Swal.fire({
         icon: 'error',
@@ -149,7 +141,14 @@ export class QuotationComponent implements OnInit {
       if (this.cotizacion.monto < this.cotizacion.cuotaDeseada || this.cotizacion.monto == 0 || this.cotizacion.cuotaDeseada == 0 || this.cotizacion.fechaPago == "" || this.cotizacion.periodoPago == "" || this.cotizacion.cuotaDeseada <= this.cotizacion.interesPorcentaje || this.cotizacion.interesPorcentaje >= this.cotizacion.cuotaDeseada || this.cotizacion.mora==0) {
         console.log("Error datos no renellados o Interes % mayor a la cuota deseada")
         return;
-      } this.calcularInteresPorcentaje();
+      } 
+      Swal.fire({
+        icon: 'success',
+        title: 'Cotizacion generada con exito!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      this.calcularInteresPorcentaje();
     }
   }
 
@@ -297,6 +296,7 @@ export class QuotationComponent implements OnInit {
   }
 
   buscarCliente(){
+    this.users=[];
     this.dataServices.getClient(this.cotizacion.dpiBusqueda).subscribe(doc=>{
       this.users=[];
       doc.forEach((element:any)=>{
@@ -305,27 +305,27 @@ export class QuotationComponent implements OnInit {
           ...element.payload.doc.data()
         })
       });
+      if(this.users.length===0){
+        Swal.fire({
+          icon: 'error',
+          title: 'Cliente No encontrado',
+          text: 'El Nombre no esta registrado!',
+          footer: '<a href="/clientesVersionDos">click para registrar al cliente?</a>'
+        })
+      }else{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Cliente encontrado',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+      }
     })
-    
-    if(this.users.length>0){
-      Swal.fire({
-        icon: 'error',
-        title: 'Cliente No encontrado',
-        text: 'El DPI no esta registrado!',
-        footer: '<a href="/clientesVersionDos">click para registrar al cliente?</a>'
-      })
-    }else{
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Cliente encontrado',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    }
   }
 
   buscarVehiculo(){
+    this.vehicle=[];
     this.dataServices.getVehicul(this.cotizacion.vehiculoBusqueda).subscribe(doc=>{
       this.vehicle=[]
       doc.forEach((element:any)=>{
@@ -334,23 +334,23 @@ export class QuotationComponent implements OnInit {
           ...element.payload.doc.data()
         })
       });
+      if(this.vehicle.length===0){
+        Swal.fire({
+          icon: 'error',
+          title: 'Modelo de vehiculo No encontrado',
+          text: 'El Modelo no esta registrado!',
+          footer: '<a href="/vehiculos">click para registrar nuevo vihiculo?</a>'
+        })
+      }else{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Vehiculo encontrado',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     })
-    if(this.vehicle.length>0){
-      Swal.fire({
-        icon: 'error',
-        title: 'Modelo de vehiculo No encontrado',
-        text: 'El Modelo no esta registrado!',
-        footer: '<a href="/clientesVersionDos">click para registrar nuevo vihiculo?</a>'
-      })
-    }else{
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Vehiculo encontrado',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    }
   }
   
   seleccionarCliente(id: string, nombre:string, apellido:string, dpi:string, direccion:string, telefono:string){
@@ -444,6 +444,7 @@ export class QuotationComponent implements OnInit {
       doc.autoTable({
         html:'#table',
         startY:tablaY,
+        endY:635,
         styles:{
           fontSize:10,
           cellWidth:'wrap'
@@ -452,11 +453,26 @@ export class QuotationComponent implements OnInit {
           1:{
             columnWidth:'auto'
           }
-        }
+        }  
       });
+      doc.text('Firma Acreedor _______________________      Firma Cliente  _______________________',300,815,'center');
+      doc.addPage();
       doc.setFontSize(12);
+      doc.setFontStyle('bold');
+      doc.addImage (logoPDF, 'PNG', 40, 25, 200, 75);
+      doc.text('Asunto: Carta de préstamo',40,125);
       doc.setFontStyle('normal');
-      doc.text('Firma Vendedor _______________________      Firma Cliente  _______________________',300,815,'center');
+      doc.text('Por medio de la presente se hace constar que el cliente: '+this.datosPDF.clientNombre+' '+this.datosPDF.clientApellido,40,150);
+      doc.text('DPI No. '+this.datosPDF.clientDpi+' se compromete a pagar la cantidad de: Q.'+this.venta.ventaCantidad+' en el tiempo estipulado.',40,165);
+      doc.text('Dicho monto será cubierto en pagos realizados según las fechas estipuladas de este documento.',40,180);
+      doc.text('A su vez se le informa al cliente: '+this.datosPDF.clientNombre+' '+this.datosPDF.clientApellido,40,205);
+      doc.text('Que tendra que realizar sus pagos al menos un dia antes de las fechas de pago acordadas.',40,220);
+      doc.text('En el entendido de que si no fuere de esa manera y existiera algún retraso en el pago, a partir de',40,235);
+      doc.text('ese momento se cobrará una mora agregadad de: ',40,250);
+      doc.setFontStyle('bold');
+      doc.text('Q.'+this.cotizacion.mora+" por la fecha retrasada.",310,250);
+      doc.text('Nombre del Acreedor: _______________________   Nombre del Cliente: _______________________',290,350,'center');
+      doc.text('Firma Acreedor: _______________________      Firma Cliente: _______________________',300,400,'center');
       doc.save(`${new Date().toISOString()}_Cotizacion.pdf`);
     }
 

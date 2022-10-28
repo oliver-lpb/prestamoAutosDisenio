@@ -74,15 +74,12 @@
                     </thead>
                     <tbody *ngFor="let pagos of datos">
                         <tr *ngFor="let listPago of pagos.pagos">
-                            <div *ngIf="listPago.fechaPago == 'Saldo inicial'">
-                                <span style="color: rgb(12, 0, 184);"> Nueva Cotizacion </span>
-                                <td style="color: rgb(12, 0, 184);">{{listPago.fechaPago}}</td>
-                            </div>
-                            <td>{{listPago.fechaPago}}</td>
-                            <td>{{listPago.cuotaCotizacion}}</td>
-                            <td>{{listPago.interesCotizacion}}</td>
-                            <td>{{listPago.capitalCotizacion}}</td>
-                            <td>{{listPago.saldoCotizacion}}</td>
+                            <td  *ngIf="listPago.fechaPago == 'Saldo inicial'" style="color: rgb(12, 0, 184);">{{listPago.fechaPago}}</td>
+                            <td  *ngIf="listPago.fechaPago != 'Saldo inicial'" style="color: rgb(0, 0, 0);">{{listPago.fechaPago}}</td>
+                            <td>{{listPago.cuotaCotizacion|currency: 'Q. '}}</td>
+                            <td>{{listPago.interesCotizacion|currency: 'Q. '}}</td>
+                            <td>{{listPago.capitalCotizacion|currency: 'Q. '}}</td>
+                            <td>{{listPago.saldoCotizacion|currency: 'Q. '}}</td>
                             <td *ngIf="listPago.firmaPago == 'PAGO REALIZADO'" style="color: rgb(3, 160, 11);">{{listPago.firmaPago}}</td>
                             <td *ngIf="listPago.firmaPago == 'MORA AGREGADA'" style="color: rgb(235, 4, 4);">{{listPago.firmaPago}}</td>
                             <td *ngIf="listPago.firmaPago == 'PAGO NO REALIZADO'" style="color: rgb(0, 0, 0);">{{listPago.firmaPago}}</td>
@@ -97,6 +94,8 @@
             </div>
         </div>
     </div>
+    <button mat-raised-button class="me-8 mb-8" color="primary"  
+    (click)="imprimirPagos()">Imprimir Pagos</button>
 </mat-card>
 
    

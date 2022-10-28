@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { Cotizacion, datosPDF } from 'src/app/models/quotation.model';
 import { userModel } from 'src/app/models/user.model';
 import { DatosService } from 'src/app/services/data.service';
@@ -40,6 +40,8 @@ export class PagosComponent implements OnInit {
       reporteInteres:0,
   }
 
+  fechaEsp: string='';
+
 
   //listar clientes
   users:userModel[]=[];
@@ -66,7 +68,8 @@ export class PagosComponent implements OnInit {
   }
 
   pago(id:string, fecha:string){
-
+        //pdf
+        var doc = new jspdf('p','pt', 'a4');
     Swal.fire({
       title: 'Desea registrar este pago?',
       showDenyButton: true,
@@ -81,16 +84,16 @@ export class PagosComponent implements OnInit {
     this.cot.pagos=[]
     this.data.getCot2(id).then(resp=>{
     this.datos=resp;
-    //pdf
-    var doc = new jspdf('p','pt', 'a4');
+
     
       this.cot.idCliente = this.datos[0].idCliente;
       this.cot.idVehiculo = this.datos[0].idVehiculo;
       this.cot.mora = this.datos[0].mora;
       for (let i = 0; i<this.datos[0].pagos.length; i++ )
       {
-        if (fecha==this.datos[0].pagos[i].fechaPago && this.datos[0].pagos[i].firmaPago != "PAGO REALIZADO" ){
+        if (fecha===this.datos[0].pagos[i].fechaPago && this.datos[0].pagos[i].firmaPago != "PAGO REALIZADO" ){
           let date: Date = new Date();
+          this.fechaEsp = (date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
           this.cot.pagos.push({
             "fechaPago": this.datos[0].pagos[i].fechaPago,
             "cuotaCotizacion": this.datos[0].pagos[i].cuotaCotizacion,
@@ -106,8 +109,11 @@ export class PagosComponent implements OnInit {
           this.reportePagos.reporteInteres = this.datos[0].pagos[i].interesCotizacion;
           //PDF FACTURA
       doc.addImage (logoPDF, 'PNG', 40, 25, 200, 75);
-      doc.setFontSize(12);
+      doc.setFontSize(9);
       doc.setFontStyle('bold');
+      doc.setTextColor('#000000');
+      doc.text('ID Cliente:'+this.datos[0].idCliente,430,14);
+      doc.setFontSize(12);
       doc.setTextColor('#0d32ec');
       doc.text('RECIBO "PAGO DE PRESTAMO REALIZADO"',295,30);
       doc.text('DATOS DEL CLIENTE',255,50)
@@ -136,7 +142,7 @@ export class PagosComponent implements OnInit {
       doc.text('Estado del pago:',75,245);
       doc.setFontStyle('normal');
       doc.setTextColor('#000000');
-      doc.text(''+date,225,140);
+      doc.text(''+this.fechaEsp,225,140);
       doc.text(this.datos[0].pagos[i].fechaPago,240,155);
       doc.text(''+this.datos[0].pagos[i].cuotaCotizacion,195,170);
       doc.text(''+this.datos[0].pagos[i].interesCotizacion,200,185);
@@ -146,7 +152,7 @@ export class PagosComponent implements OnInit {
       doc.text("PAGO REALIZADO",175,245);                                                       
       doc.setFontStyle('normal');
       doc.text('Nombre y firma del receptor ______________________________________________________',40,350);
-      doc.text('Firma Cliente  ____________________________',300,395,'center');
+      doc.text('Firma Cliente  ____________________________',300,395,'center'),
       doc.save(`${new Date().toISOString()}_Recibo.pdf`);
         } else {
           this.cot.pagos.push({
@@ -158,9 +164,7 @@ export class PagosComponent implements OnInit {
             "firmaPago": this.datos[0].pagos[i].firmaPago,
           });
         }
-      
       }
-      console.log(this.datos[0].id,"id cotizacion");
       
       const path = 'cotizacion/';
       this.data.updateDoc(this.cot, path,this.datos[0].id,);
@@ -169,12 +173,11 @@ export class PagosComponent implements OnInit {
       this.data.createDoc(this.reportePagos, path2);
      
     });
-
       } else if (result.isDenied) {
         Swal.fire('No se realizaron cambios', '', 'info')
       }
     })
-    
+   
   }
 
   mora(id:string){
@@ -190,9 +193,10 @@ export class PagosComponent implements OnInit {
     {
       const str = this.datos[0].pagos[i].fechaPago;
       const [day, month, year] = str.split('/');
-      const d = new Date(+year, +month - 1, +day);
-      
+      const d = new Date(+year, +month - 1, +day+1);
+     
       if (d<dateACTUAL && (this.datos[0].pagos[i].firmaPago != "PAGO REALIZADO" && this.datos[0].pagos[i].firmaPago !="MORA AGREGADA") ){
+        console.log(d);
         this.datos[0].pagos[i].cuotaCotizacion += this.datos[0].mora
         this.cot.pagos.push({
           "fechaPago": this.datos[0].pagos[i].fechaPago,
@@ -218,5 +222,61 @@ export class PagosComponent implements OnInit {
     });
   }
 
+  imprimirPagos(){
+    var tablaY=135;
+      var doc = new jspdf('p','pt', 'a4');
+      doc.addImage (logoPDF, 'PNG', 40, 25, 200, 75);
+      doc.setFontSize(12);
+      doc.setFontStyle('bold');
+      doc.setTextColor('#0d32ec');
+      doc.text('DATOS DEL CLIENTE',305,30);
+      doc.setTextColor('#000000');
+      doc.text('Nombre:',255,50);
+      doc.text('DPI:',255,65);
+      doc.setFontStyle('normal');
+      doc.text(this.datosPDF.clientNombre+' '+this.datosPDF.clientApellido,305,50);
+      doc.text(this.datosPDF.clientDpi,280,65,);
+      doc.setFontStyle('bold');
+      doc.text('Direccion:',255,80);
+      doc.text('Telefono:',255,95);
+      doc.setFontStyle('normal');
+      doc.text(this.datosPDF.clientDireccion,315,80);
+      doc.text(this.datosPDF.clientTelefono,310,95);
+      if (this.datosPDF.autoNombre!=""){
+        doc.setFontStyle('bold');
+        doc.setTextColor('#0d32ec');
+        doc.text('DATOS DEL VEHICULO',60,115);
+        doc.setTextColor('#000000');
+        doc.text('Nombre:',40,135);
+        doc.text('Modelo:',40,150);
+        doc.text('Marca:',40,165);
+        doc.text('Color:',40,180);
+        doc.setFontStyle('normal');
+        doc.text(this.datosPDF.autoNombre,95,135);
+        doc.text(this.datosPDF.autoModelo,90,150);
+        doc.text(this.datosPDF.autoMarca,85,165);
+        doc.text(this.datosPDF.autoColor,80,180);
+        tablaY+=65;
+      }
+
+      doc.autoTable({
+        html:'#table',
+        startY:tablaY,
+        styles:{
+          fontSize:10,
+          cellWidth:'wrap'
+        },
+        columnStyles:{
+          1:{
+            columnWidth:'auto'
+          }
+        }
+      });
+      doc.setFontSize(12);
+      doc.setFontStyle('normal');
+      doc.save(`${new Date().toISOString()}_Estado De Pagos.pdf`);
+  }
+
+  
   
 }
