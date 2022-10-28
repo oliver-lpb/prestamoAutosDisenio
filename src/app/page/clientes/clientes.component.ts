@@ -40,12 +40,8 @@ export class ClientesComponent implements OnInit {
 
   correo: string ='';
   eliminarTarjeta(id:any){
-    this.auth.obternerUserLogin().subscribe(res=>{
-      console.log(res?.email);
-      
-    })
-    //this.dataServices.eliminarTarjeta(id).then(()=>{
-    //},error=>{console.log(error)})
+    this.dataServices.eliminarTarjeta(id).then(()=>{
+    },error=>{console.log(error)})
   }
 
   initUser(){

@@ -4,7 +4,7 @@
     <div class="container mt-4 fondo visualizacion">
         <div class="card">
             <div class="card-body">
-                <h3 class="h3"> Proximos a pagar mas cercanos </h3>
+                <h3 class="h3"> Deudores </h3>
                 <table class="table table-striped mt-5" id="table">
                     <thead>
                         <tr>
@@ -19,7 +19,8 @@
                                 <img class="zoom" [src]="pagos.fotoUrl" width="50">
                             </td>
                             <td>{{pagos.nombre | json}}</td>
-                            <td>{{pagos.fecha | json}}</td>
+                            <td class="fecha badge">{{pagos.fecha | json}}</td>
+                            
                             <td></td>
                         </tr>
                     </tbody>

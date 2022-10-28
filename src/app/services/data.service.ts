@@ -49,6 +49,11 @@ export class DatosService {
     getUsuario(id: string): Observable<any> {
         return this.firebase.collection('usuarios').doc(id).snapshotChanges();
     }
+
+    getVehiculoEdit(id: string): Observable<any> {
+        return this.firebase.collection('vehiculo').doc(id).snapshotChanges();
+    }
+
     actualizaUsuario(id: string, data: any): Promise<any> {
         return this.firebase.collection('usuarios').doc(id).update(data);
     }
@@ -61,9 +66,7 @@ export class DatosService {
     getVehiculo(): Observable<any> {
         return this.firebase.collection('vehiculo', ref => ref.orderBy('fechaCreacion', 'desc')).snapshotChanges();
     }
-    getVehiculoEdit(id: string): Observable<any> {
-        return this.firebase.collection('vehiculo').doc(id).snapshotChanges();
-    }
+    
     actualizarVehiculo(id: string, data: any): Promise<any> {
         return this.firebase.collection('vehiculo').doc(id).update(data);
     }
@@ -146,7 +149,7 @@ export class DatosService {
     }
 
     getMesCapital(fecha:any){
-        return this.firebase.collection('venta',ref => ref.where('fechaCreacion','==', fecha)).snapshotChanges();
+        return this.firebase.collection('venta',ref => ref.where('ventaFecha','==', fecha)).snapshotChanges();
     }
 
     getCotizacion(): Observable<Cotizacion[]> {
@@ -154,10 +157,12 @@ export class DatosService {
         return collectionData(placeRef, { idField: 'id' }) as Observable<Cotizacion[]>;
     }
 
-    
-
     getCotizacionDos(): Observable<any>{
-        return this.firebase.collection('listaPagosSemana', ref => ref.orderBy('nombre', 'desc')).snapshotChanges();
+        return this.firebase.collection('cotizacion', ref => ref.orderBy('idCliente', 'desc')).snapshotChanges();
+    }
+
+    getReportePagos():Observable<any>{
+        return this.firebase.collection('reportePagos', ref => ref.orderBy('reporteFecha','desc')).snapshotChanges();
     }
 
     updateDoc2(data: any, path: string, id: string) {

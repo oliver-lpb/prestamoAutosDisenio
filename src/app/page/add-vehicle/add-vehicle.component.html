@@ -41,7 +41,7 @@
                 <mat-label>Marca</mat-label>
                 <input matInput type="text" placeholder="marca" name="marca" formControlName="marca">
 
-                <div *ngIf="getValidacion('marca')?.invalid && (getValidacion('marca')?.touched || getValidacion('apellido')?.dirty)  "
+                <div *ngIf="getValidacion('marca')?.invalid && (getValidacion('marca')?.touched || getValidacion('marca')?.dirty)  "
                     class="rojo">
                     <div *ngIf="getValidacion('marca')?.errors?.['required']" class="rojo">
                         *La "marca" es requerido.

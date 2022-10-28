@@ -1,0 +1,34 @@
+
+    <button (click)="generarPDF()" mat-raised-button class="me-8 mb-8" color="accent">Listado de Clientes</button>
+    <div class="container mt-4 fondo visualizacion">
+        <div class="card">
+            <div class="card-body">
+                <span class="h3"> Formulario Cotizacion </span>
+                <table class="table table-striped mt-5" id="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>DPI</th>
+                            <th>NIT</th>
+                            <th>Telefono</th>
+                            <th>Telefono Secundario</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pagos of users">
+                            <td>{{pagos.nombre| json}}</td>
+                            <td>{{pagos.apellido| json}}</td>
+                            <td>{{pagos.dpi| json}}</td>
+                            <td>{{pagos.NumNit| json}}</td>
+                            <td>{{pagos.telefono| json}}</td>
+                            <td>{{pagos.telefonoSecundario| json}}</td>
+                            
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

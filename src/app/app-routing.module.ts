@@ -78,7 +78,7 @@ const routes: Routes = [
 
       //extras
 
-    {path: 'casa',component:ProximosPagarComponent,
+    {path: 'casa',component:ReportesComponent,
     canActivate: [AngularFireAuthGuard, RoleGuardGuard],
     data:{
       expectedRoles:['gerencia', 'secretaria', 'ventas']
@@ -102,6 +102,14 @@ const routes: Routes = [
 
     {
       path: 'editCliente/:id',component:AdClientesComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria', 'ventas']
+      }
+    },
+
+    {
+      path: 'editVehiculo/:id',component:AddVehicleComponent,
       canActivate: [AngularFireAuthGuard, RoleGuardGuard],
       data:{
         expectedRoles:['gerencia', 'secretaria', 'ventas']

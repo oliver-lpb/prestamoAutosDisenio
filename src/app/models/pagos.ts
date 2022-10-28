@@ -16,7 +16,7 @@ export class datosDeudores{
 export interface reportePagos{
     id?: string;
     reporteNombre:string;
-    reporteFecha:string;
+    reporteFecha:number;
     reporteSaldo:number;
     reporteInteres:number;
 }

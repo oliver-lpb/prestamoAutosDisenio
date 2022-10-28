@@ -50,6 +50,6 @@ export interface datosPDF{
 export interface ventaDatos{
     id?: string;
     ventaNombre:string;
-    ventaFecha:string;
+    ventaFecha:number;
     ventaCantidad:number;
 }

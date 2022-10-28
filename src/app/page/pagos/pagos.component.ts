@@ -35,7 +35,7 @@ export class PagosComponent implements OnInit {
 
   reportePagos: reportePagos={
       reporteNombre:'',
-      reporteFecha:'',
+      reporteFecha:0,
       reporteSaldo:0,
       reporteInteres:0,
   }
@@ -66,6 +66,8 @@ export class PagosComponent implements OnInit {
     });
     this.mora(id);
   }
+  separadorFecha:string='';
+  separadorFechaString:string[]=[];
 
   pago(id:string, fecha:string){
         //pdf
@@ -104,7 +106,52 @@ export class PagosComponent implements OnInit {
           });
 
           //datos reporte
-          this.reportePagos.reporteFecha = this.datos[0].pagos[i].fechaPago;
+          
+          
+          this.separadorFechaString = this.datos[0].pagos[i].fechaPago.split("/");
+          this.separadorFecha=this.separadorFechaString[1]
+          console.log(this.separadorFecha,'esta es la fecha cantidad')
+          switch(this.separadorFecha){
+            case '1':
+              this.reportePagos.reporteFecha = 0;
+              
+              break;
+            case '2':
+            this.reportePagos.reporteFecha = 1;
+              break;
+            case '3':
+              this.reportePagos.reporteFecha = 2;
+              break;
+            case '4':
+                this.reportePagos.reporteFecha = 3;
+                break;
+            case '5':
+              this.reportePagos.reporteFecha = 4;
+                break;
+            case '6':
+                this.reportePagos.reporteFecha = 5;
+                break;
+            case '7':
+                this.reportePagos.reporteFecha = 6;
+                break;
+            case '8':
+              this.reportePagos.reporteFecha = 7;
+              break;
+            case '9':
+              this.reportePagos.reporteFecha = 8;
+              break;
+            case '10':
+                this.reportePagos.reporteFecha = 9;
+                break;
+            case '11':
+              this.reportePagos.reporteFecha = 10;
+                break;
+            case '12':
+                this.reportePagos.reporteFecha = 11;
+                break;
+            }
+
+
           this.reportePagos.reporteSaldo = this.datos[0].pagos[i].saldoCotizacion;
           this.reportePagos.reporteInteres = this.datos[0].pagos[i].interesCotizacion;
           //PDF FACTURA

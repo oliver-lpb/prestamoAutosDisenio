@@ -1,23 +1,20 @@
 export class ventaCapitalModel {
     id?: string;
-    cantidadPrestamo: number;
-    idCliente: string;
-    idCotizacion: string;
-    //fechas
-    fechaCreacion:number;
+    ventaCantidad: number;
+    ventaNombre: string;
+    fechaVenta: string;
+    
     
 
     constructor(
-        cantidadPrestamo: number,
-        idCliente: string,
-        idCotizacion: string,
-        fechaCreacion:number,
+        ventaCantidad: number,
+        ventaNombre: string,
+        fechaVenta: string,
         
         ){
-        this.cantidadPrestamo = cantidadPrestamo;
-        this.idCliente = idCliente;
-        this.idCotizacion = idCotizacion;
-        this.fechaCreacion = fechaCreacion;
+        this.ventaCantidad = ventaCantidad;
+        this.ventaNombre = ventaNombre;
+        this.fechaVenta = fechaVenta;
         
     }
     

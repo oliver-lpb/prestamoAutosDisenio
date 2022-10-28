@@ -40,6 +40,8 @@ import { ReporteCapitalComponent } from './page/reporte-capital/reporte-capital.
 import { ReportesComponent } from './page/reportes/reportes.component';
 import { ProximosPagarComponent } from './page/proximos-pagar/proximos-pagar.component';
 import { PagosComponent } from './page/pagos/pagos.component';
+import { ReporteListClientesComponent } from './page/reporte-list-clientes/reporte-list-clientes.component';
+import { DeudoresComponent } from './page/deudores/deudores.component';
 
 
 
@@ -63,6 +65,8 @@ import { PagosComponent } from './page/pagos/pagos.component';
     ReportesComponent,
     ProximosPagarComponent,
     PagosComponent,
+    ReporteListClientesComponent,
+    DeudoresComponent,
     
   ],
   imports: [
