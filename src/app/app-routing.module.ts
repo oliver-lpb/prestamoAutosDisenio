@@ -109,6 +109,14 @@ const routes: Routes = [
     },
 
     {
+      path: 'editVehiculo/:id',component:AddVehicleComponent,
+      canActivate: [AngularFireAuthGuard, RoleGuardGuard],
+      data:{
+        expectedRoles:['gerencia', 'secretaria', 'ventas']
+      }
+    },
+
+    {
       path: 'users',component:UsersComponent,
       canActivate: [AngularFireAuthGuard, RoleGuardGuard],
       data:{

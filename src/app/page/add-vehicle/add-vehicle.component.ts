@@ -38,6 +38,7 @@ export class AddVehicleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.leerEditar();
   }
 
   getValidacion(validacion: string) {
@@ -104,11 +105,6 @@ export class AddVehicleComponent implements OnInit {
   }
 
   actualizarUsuario(id: string) {
-    this.submitted = true;
-    //condicion para validar formulario
-    if (this.form.invalid) {
-      return;
-    }
     const Vehicle: any = {
       nombre: this.form.value.nombre, //quite el null
       marca: this.form.value.marca,
@@ -119,14 +115,12 @@ export class AddVehicleComponent implements OnInit {
       fechaCreacion: new Date(),
       fehcaActualizacion: new Date(),
     };
-    
     this.dataServices.actualizarVehiculo(id, Vehicle).then(() => {
-      
       console.log("Tarjeta modificada");
       //this.toastr.success('Cambios realizados con exito','Modificaion')
       this.form.reset();
     });
-    this.router.navigate(["./clientesVersionDos"]);
+    this.router.navigate(["./vehiculos"]);
   }
 
   leerEditar() {
@@ -135,10 +129,10 @@ export class AddVehicleComponent implements OnInit {
         console.log(data);
         this.form.setValue({
           nombre: data.payload.data()["nombre"],
-          marca: data.payload.data()["apellido"],
-          modelo: data.payload.data()["dpi"],
-          tipo: data.payload.data()["correo"],
-          color: data.payload.data()["direccion"],
+          marca: data.payload.data()["marca"],
+          modelo: data.payload.data()["modelo"],
+          tipo: data.payload.data()["tipo"],
+          color: data.payload.data()["tipo"],
           fotoUrl: data.payload.data()["fotoUrl"],
           
         })}

@@ -44,15 +44,11 @@
                     <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.color}} </td>
                 </ng-container>
 
-
                 <!-- Budget Column -->
-                <ng-container matColumnDef="Botones">
+                <ng-container matColumnDef="Boton">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-raised-button class="me-8 mb-8" color="primary"[routerLink]="['/editCliente/', element.id]" >Editar</button>
-
-                        <button mat-raised-button class="me-8 mb-8" color="warn" class="btn boton"
-                            (click)="eliminarTarjeta(element.id)">Eliminar</button>
+                        <button mat-raised-button class="me-8 mb-8" color="primary"[routerLink]="['/addVehiculos/', element.id]" >Editar</button>
                     </td>
                 </ng-container>
 

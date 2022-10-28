@@ -11,7 +11,7 @@ import { DatosService } from 'src/app/services/data.service';
 })
 export class VehicleComponent implements OnInit {
 
-  displayedColumns: string[] = ['Nombre', 'Modelo', 'Marca', 'Tipo', 'Color'];
+  displayedColumns: string[] = ['Nombre', 'Modelo', 'Marca', 'Tipo', 'Color','Boton'];
   initAddUser:boolean=false;
   vehicle:vehicleModel[]=[];
 
@@ -28,15 +28,6 @@ export class VehicleComponent implements OnInit {
     }else{
       this.initAddUser=false;
     }
-  }
-
-  eliminarTarjeta(id:any){
-    this.auth.obternerUserLogin().subscribe(res=>{
-      console.log(res?.email);
-      
-    })
-    //this.dataServices.eliminarTarjeta(id).then(()=>{
-    //},error=>{console.log(error)})
   }
 
   obtenerTarjeta(){

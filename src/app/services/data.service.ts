@@ -49,6 +49,11 @@ export class DatosService {
     getUsuario(id: string): Observable<any> {
         return this.firebase.collection('usuarios').doc(id).snapshotChanges();
     }
+
+    getVehiculoEdit(id: string): Observable<any> {
+        return this.firebase.collection('vehiculo').doc(id).snapshotChanges();
+    }
+
     actualizaUsuario(id: string, data: any): Promise<any> {
         return this.firebase.collection('usuarios').doc(id).update(data);
     }
@@ -61,9 +66,7 @@ export class DatosService {
     getVehiculo(): Observable<any> {
         return this.firebase.collection('vehiculo', ref => ref.orderBy('fechaCreacion', 'desc')).snapshotChanges();
     }
-    getVehiculoEdit(id: string): Observable<any> {
-        return this.firebase.collection('vehiculo').doc(id).snapshotChanges();
-    }
+    
     actualizarVehiculo(id: string, data: any): Promise<any> {
         return this.firebase.collection('vehiculo').doc(id).update(data);
     }
