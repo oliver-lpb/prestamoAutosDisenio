@@ -1,4 +1,6 @@
-
+.visualizacion{
+    display: none;
+}
 input[type=radio] {
     border: 0px;
     width: 27%;
@@ -36,13 +38,4 @@ tr:nth-child(even){
 tr:hover td{
     background-color: #363c96;
     color: white;
-}
-
-.zoom {
-    
-    transition: transform .2s; 
-}
-
-.zoom:hover {
-    transform: scale(4.0); 
 }

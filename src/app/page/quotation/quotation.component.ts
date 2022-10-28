@@ -62,7 +62,7 @@ export class QuotationComponent implements OnInit {
 
   venta: ventaDatos={
     ventaNombre:'',
-    ventaFecha:'',
+    ventaFecha:0,
     ventaCantidad:0,
   }
 
@@ -152,7 +152,7 @@ export class QuotationComponent implements OnInit {
       } this.calcularInteresPorcentaje();
     }
   }
-
+  mes:number=0;
 
   calcularInteresPorcentaje() {
     //console.log("Fecha_de_pago " + "Cuota fija " + "Intereses " + "Capital " + "Saldo");
@@ -176,6 +176,7 @@ export class QuotationComponent implements OnInit {
     //para que inicie el dia que se eligio
     if (this.cotizacion.periodoPago == "mensual") {
       fecha.setDate(fecha.getDate() + 1);
+      this.mes=fecha.getMonth();
       this.cotizacion.fechaPago = (fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
     } else if (this.cotizacion.periodoPago == "quincenal") {
       fecha.setDate(fecha.getDate() );
@@ -185,7 +186,7 @@ export class QuotationComponent implements OnInit {
       this.cotizacion.fechaPago = (fecha.getDate() + 1 + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
     }
 
-    this.venta.ventaFecha=this.cotizacion.fechaPago;
+    this.venta.ventaFecha=this.mes;
     this.venta.ventaCantidad=this.cotizacion.monto;
 
     while (contador >= 0) {
@@ -223,7 +224,7 @@ export class QuotationComponent implements OnInit {
     }
   }
 
-
+  
 
   calcularInteresFijo() {
 
@@ -247,6 +248,7 @@ export class QuotationComponent implements OnInit {
     //para que inicie el dia que se eligio
     if (this.cotizacion.periodoPago == "mensual") {
       fecha.setDate(fecha.getDate() + 1);
+      this.mes = fecha.getMonth();
       this.cotizacion.fechaPago = (fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear());
     } else if (this.cotizacion.periodoPago == "quincenal") {
       fecha.setDate(fecha.getDate() );
@@ -257,7 +259,8 @@ export class QuotationComponent implements OnInit {
       
     }
 
-    this.venta.ventaFecha=this.cotizacion.fechaPago;
+    //this.venta.ventaFecha=this.cotizacion.fechaPago;
+    this.venta.ventaFecha=this.mes;
     this.venta.ventaCantidad=this.cotizacion.monto;
     //condicion para elegir el tipo de interes
     while (contador >= 1) {

@@ -68,13 +68,6 @@ export class FullComponent {
       icon: "divide-circle",
       menu: "Cotizacion",
     },
-
-    {
-      link: "/reportes",
-      icon: "layers",
-      menu: "Reportes",
-    },
-
     {
       link: "/users",
       icon: "disc",
