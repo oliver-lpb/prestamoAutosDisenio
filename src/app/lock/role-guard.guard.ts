@@ -51,9 +51,9 @@ export class RoleGuardGuard implements CanActivate {
     })
     
       console.log('esto es de patyrol pas o3',this.rol);
-      //const roles = [this.rol]; //dinamico
+      const roles = [this.rol]; //dinamico
       console.log('esto es de patyrol pas o4',this.rol);
-      const roles = ['gerencia'];
+      //const roles = ['gerencia'];
       const expectedRoles = route.data['expectedRoles'];
       const rolematchs = roles.findIndex(role => expectedRoles.indexOf(role)!== -1);
       return (rolematchs < 0) ? false : true;
